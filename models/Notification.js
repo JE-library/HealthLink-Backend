@@ -1,4 +1,7 @@
-// 4. Notification Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+//  Notification Schema
 const NotificationSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   title: { type: String, required: true },

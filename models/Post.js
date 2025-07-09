@@ -16,11 +16,14 @@ const PostSchema = new Schema({
     ],
     default: "general",
   },
-  author: { type: Schema.Types.ObjectId },
+  ServiceProvider: {
+    type: Schema.Types.ObjectId,
+    ref: "ServiceProvider",
+    required: true,
+  },
   tags: [String], // For filtering/search (e.g., "sleep", "vitamins")
   imageUrl: { type: String, required: false },
-  createdAt: { type: Date, default: Date.now },
-  published: { type: Boolean, default: true },
+  createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("Post", PostSchema);

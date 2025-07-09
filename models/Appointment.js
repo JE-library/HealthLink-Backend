@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// 1. Appointment Schema
+// Appointment Schema
 const AppointmentSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   serviceProvider: {
@@ -14,7 +14,7 @@ const AppointmentSchema = new Schema({
   mode: {
     type: String,
     enum: ["video", "chat", "audio", "in-person"],
-    default: "in-person",
+    default: "chat",
   },
   status: {
     type: String,

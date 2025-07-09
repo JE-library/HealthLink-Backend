@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// 6. Conversation Schema
+// Conversation Schema
 const ConversationSchema = new Schema({
   participants: [
     {

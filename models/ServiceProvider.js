@@ -10,6 +10,7 @@ const ServiceProviderSchema = new Schema({
   gender: { type: String, enum: ["male", "female", "other"] },
   dateOfBirth: { type: Date },
   address: { type: String },
+  role: { type: String, default: "Service Provider" },
   profileImage: { type: String }, // optional profile photo URL
   // Professional Details
   specialization: {
@@ -68,12 +69,6 @@ const ServiceProviderSchema = new Schema({
       createdAt: { type: Date, default: Date.now },
     },
   ],
-  metadata: {
-    clinicName: String,
-    location: String,
-    verified: { type: Boolean, default: false },
-    languagesSpoken: [String],
-  },
   appointments: [
     {
       type: Schema.Types.ObjectId,
