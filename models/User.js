@@ -10,6 +10,14 @@ const UserSchema = new Schema({
   dateOfBirth: { type: Date, required: true },
   role: { type: String, default: "User" },
   address: { type: String, required: true },
+  profilePhoto: {
+    url: {
+      type: String,
+      default:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    },
+    public_id: { type: String },
+  },
   appointments: [
     {
       type: Schema.Types.ObjectId,

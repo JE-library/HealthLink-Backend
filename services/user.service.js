@@ -8,16 +8,18 @@ const userService = {
 
   // Create a new user
   createUser: async (user) => {
-    return await User.create({
-      fullName: user.fullName,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      password: user.password,
-      gender: user.gender,
-      dateOfBirth: user.dateOfBirth,
-      address: user.address,
-      role: user.role,
-    });
+    return await User.create(user);
+  },
+  // Get a user by id
+  getUserById: async (id) => {
+    return await User.findById(id).select("-password");
+  },
+  // Update user
+
+  updateUser: async (id, updateData) => {
+    return await User.findByIdAndUpdate(id, updateData, { new: true }).select(
+      "-password"
+    );
   },
 };
 

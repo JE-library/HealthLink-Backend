@@ -8,6 +8,18 @@ const registerUserSchema = Joi.object({
   gender: Joi.string().valid("male", "female", "other").required(),
   dateOfBirth: Joi.date().less("now").required(),
   address: Joi.string().min(3).required(),
+  profilePhoto: Joi.string().uri().optional(),
 });
 
-module.exports = { registerUserSchema };
+const updateUserSchema = Joi.object({
+  fullName: Joi.string().min(3).max(50),
+  email: Joi.string().email(),
+  phoneNumber: Joi.string(),
+  password: Joi.string().min(6),
+  gender: Joi.string().valid("male", "female", "other"),
+  dateOfBirth: Joi.date().less("now"),
+  address: Joi.string().min(3),
+  profilePhoto: Joi.string().uri().optional(),
+});
+
+module.exports = { registerUserSchema, updateUserSchema };
