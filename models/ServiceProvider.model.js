@@ -74,13 +74,13 @@ const ServiceProviderSchema = new Schema({
     verified: { type: Boolean, default: false },
     languagesSpoken: [String],
   },
-  consultations: [
+  appointments: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Consultation",
+      ref: "Appointment",
     },
   ],
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("ServiceProvider", ServiceProviderSchema);
+module.exports = mongoose.model("Appointment", AppointmentSchema);
