@@ -22,8 +22,10 @@ app.use(express.json());
 
 // Routes
 app.use("/api/users", userRoutes);
+
+//TESTING IF UPLOAD WORKS
 app.post("/api/testinguploads", upload.single("avatar"), (req, res) =>{
-  cloudinary.uploader.upload('avatar'),
+  cloudinary.uploader.upload('avatar'), //NEED TO WORK ON CLOUDINARY POSTING
   res.send("Uploaded")
 })
 
