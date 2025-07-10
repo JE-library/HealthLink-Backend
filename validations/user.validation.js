@@ -22,4 +22,10 @@ const updateUserSchema = Joi.object({
   profilePhoto: Joi.string().uri().optional(),
 });
 
-module.exports = { registerUserSchema, updateUserSchema };
+
+const changePasswordSchema = Joi.object({
+  currentPassword: Joi.string().required(),
+  newPassword: Joi.string().min(6).required(),
+});
+
+module.exports = { registerUserSchema, updateUserSchema, changePasswordSchema };

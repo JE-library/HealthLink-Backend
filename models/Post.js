@@ -23,7 +23,7 @@ const PostSchema = new Schema({
   },
   tags: [String], // For filtering/search (e.g., "sleep", "vitamins")
   imageUrl: { type: String, required: false },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Post", PostSchema);

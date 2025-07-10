@@ -11,7 +11,14 @@ const ServiceProviderSchema = new Schema({
   dateOfBirth: { type: Date },
   address: { type: String },
   role: { type: String, default: "Service Provider" },
-  profileImage: { type: String }, // optional profile photo URL
+  profilePhoto: {
+    url: {
+      type: String,
+      default:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    },
+    public_id: { type: String },
+  },
   // Professional Details
   specialization: {
     type: String,
@@ -20,13 +27,19 @@ const ServiceProviderSchema = new Schema({
       "nutritionist",
       "therapist",
       "dermatologist",
-      "spa_agent",
+      "spa agent",
       "pharmacist",
-      "lab_technician",
+      "lab technician",
       "physiotherapist",
     ],
     required: true,
   },
+  labTestsOffered: [
+    {
+      type: String,
+      trim: true,
+    },
+  ],
   professionalTitle: { type: String }, // e.g. "Dr.", "RDN", "PT"
   bio: { type: String, maxlength: 1000 },
   certifications: [
@@ -39,7 +52,7 @@ const ServiceProviderSchema = new Schema({
   ],
   experienceYears: { type: Number, default: 0 },
   consultationModes: {
-    video: { type: Boolean, default: true },
+    video: { type: Boolean, default: false },
     chat: { type: Boolean, default: true },
     audio: { type: Boolean, default: false },
   },
@@ -75,7 +88,13 @@ const ServiceProviderSchema = new Schema({
       ref: "Appointment",
     },
   ],
+  labRequest: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "LabRequest",
+    },
+  ],
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Appointment", AppointmentSchema);
+module.exports = mongoose.model("ServiceProvider", ServiceProviderSchema);

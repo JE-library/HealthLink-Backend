@@ -12,7 +12,7 @@ const userService = {
   },
   // Get a user by id
   getUserById: async (id) => {
-    return await User.findById(id).select("-password");
+    return await User.findById(id);
   },
   // Update user
 
@@ -21,6 +21,14 @@ const userService = {
       "-password"
     );
   },
+
+  //  updateUserPassword : async (userId, hashedPassword) => {
+  // return await User.findByIdAndUpdate(
+  //   userId,
+  //   { password: hashedPassword },
+  //   { new: true }
+  // )
+  // }
 };
 
 module.exports = userService;
