@@ -8,6 +8,9 @@ const userRoutes = require("./routes/user.routes.js");
 const serviceProviderRoutes = require("./routes/serviceProvider.routes.js");
 const adminRoutes = require("./routes/admin.routes.js");
 const publicRoutes = require("./routes/public.routes.js");
+const sendEmail = require("./utils/sendMail.utils.js");
+const upload = require("./middlewares/upload.middleware.js");
+const cloudinary = require("./config/cloudinary.config.js")
 
 dotenv.config();
 
@@ -19,6 +22,19 @@ app.use(express.json());
 
 // Routes
 app.use("/api/users", userRoutes);
+app.post("/api/testinguploads", upload.single("avatar"), (req, res) =>{
+  cloudinary.uploader.upload('avatar'),
+  res.send("Uploaded")
+})
+
+// TESTING IF EMAIL WORKS
+// app.get("/api/testemail", async (req, res)=> {
+//   const user = {email:'jackie.creative233@gmail.com'}
+//   await sendEmail(user)
+//   res.send("Email Sent")
+// });
+
+
 // app.use("/api/providers", serviceProviderRoutes);
 // app.use("/api/admin", adminRoutes);
 // app.use("/api", publicRoutes);
