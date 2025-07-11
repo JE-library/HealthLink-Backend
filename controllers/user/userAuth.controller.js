@@ -118,6 +118,7 @@ const userAuthController = {
       // Generate Token
       const token = generateToken({
         id: matchedUser._id,
+        role: matchedUser.role,
       });
 
       // Respond

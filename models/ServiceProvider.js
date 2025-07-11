@@ -7,19 +7,20 @@ const ServiceProviderSchema = new Schema({
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true, minlength: 6 },
   phoneNumber: { type: String, required: true },
-  gender: { type: String, enum: ["male", "female", "other"] },
-  dateOfBirth: { type: Date },
-  address: { type: String },
-  role: { type: String, default: "Service Provider" },
+  gender: { type: String, enum: ["male", "female", "other"], required: true },
+  dateOfBirth: { type: Date, required: true },
+  address: { type: String, required: true },
+  role: { type: String, default: "service provider" },
   profilePhoto: {
     url: {
       type: String,
       default:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     },
-    public_id: { type: String },
+    public_id: { type: String , required: true},
   },
   // Professional Details
+  professionalTitle: { type: String, required: true }, // e.g. "Dr.", "RDN", "PT"
   specialization: {
     type: String,
     enum: [
@@ -34,28 +35,30 @@ const ServiceProviderSchema = new Schema({
     ],
     required: true,
   },
+  experienceYears: { type: Number, required: true },
   labTestsOffered: [
     {
       type: String,
       trim: true,
     },
   ],
-  professionalTitle: { type: String }, // e.g. "Dr.", "RDN", "PT"
   bio: { type: String, maxlength: 1000 },
   certifications: [
     {
       title: String,
       fileUrl: String,
+      public_id: { type: String },
       issuedBy: String,
       year: Number,
     },
   ],
-  experienceYears: { type: Number, default: 0 },
+
   consultationModes: {
     video: { type: Boolean, default: false },
     chat: { type: Boolean, default: true },
     audio: { type: Boolean, default: false },
   },
+  isAvailable: { type: Boolean, default: true },
   availability: [
     {
       day: {
@@ -93,6 +96,14 @@ const ServiceProviderSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "LabRequest",
     },
+  ],
+  status: {
+    type: String,
+    enum: ["pending", "approved", "rejected", "banned"],
+    default: "pending",
+  },
+  notes: [
+    { message: { type: String }, date: { type: Date, default: Date.now } },
   ],
   createdAt: { type: Date, default: Date.now },
 });

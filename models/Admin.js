@@ -6,6 +6,7 @@ const AdminSchema = new Schema({
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true, minlength: 6 },
   phoneNumber: { type: String, required: false },
+  role: { type: String, default: "admin" },
   createdAt: { type: Date, default: Date.now },
 });
 

@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
+const ServiceProvider = require("../models/ServiceProvider.js");
+const Admin = require("../models/Admin.js");
 
 const protected = async (req, res, next) => {
   let token;
@@ -10,10 +12,23 @@ const protected = async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
+     
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-      req.user = await User.findById(decoded.id).select("-password");
+      if (decoded.role === "user") {
+        req.user = await User.findById(decoded.id).select("-password");
+      } else if (decoded.role === "service provider") {
+        req.user = await ServiceProvider.findById(decoded.id).select(
+          "-password"
+        );
+      } else if (decoded.role === "admin") {
+        req.user = await Admin.findById(decoded.id).select("-password");
+      } else {
+        throw new Error("User Role Not Found In Middileware");
+      }
+
+      //
 
       return next();
     } catch (error) {

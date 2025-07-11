@@ -1,7 +1,7 @@
 const errorHandler = (err, req, res, next) => {
   console.error(err.stack); // Logs error stack in dev
 
- const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
 
   res.status(statusCode).json({
     success: false,
@@ -10,4 +10,4 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-module.exports =  errorHandler ;
+module.exports = errorHandler;

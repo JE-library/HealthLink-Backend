@@ -35,9 +35,11 @@ const {
 // Post Controllers
 const { getPostsUser } = require("../controllers/user/userPost.controller.js");
 
+// File Upload Middileware
+const { handleProfilePic } = require("../middlewares/upload.middleware.js");
+
 // Auth Middleware
 const protected = require("../middlewares/auth.middleware.js");
-const upload = require("../middlewares/upload.middleware.js");
 
 // Routes
 
@@ -45,7 +47,7 @@ const upload = require("../middlewares/upload.middleware.js");
 // Register route
 // Login route
 // Logout route
-router.post("/register", upload.single("profilePhoto"), registerUser);
+router.post("/register", handleProfilePic, registerUser);
 router.post("/login", loginUser);
 // router.post("/logout", logoutUser);
 
@@ -56,7 +58,7 @@ router.post("/login", loginUser);
 // Update Userprofile Route
 // Change UserPassword Route
 router.get("/profile", protected, getUser);
-router.put("/profile", protected, upload.single("profilePhoto"), updateUser);
+router.put("/profile", protected, handleProfilePic, updateUser);
 router.put("/password", protected, changePassword);
 
 // USER APPOINTMENT ROUTES
