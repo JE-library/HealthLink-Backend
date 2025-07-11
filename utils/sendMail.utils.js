@@ -27,22 +27,20 @@ const sendEmail = async (user) => {
     <title>Welcome to HealthLink</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-      rel="stylesheet"
+    <link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap" rel="stylesheet"
     />
     <style>
       body {
-        font-family: "Outfit", sans-serif;
+        font-family: "TikTok Sans", sans-serif;
         font-optical-sizing: auto;
         font-style: normal;
-        background-color: #f4f4f4;
+        background-color:rgb(144, 199, 250);
         margin: 0;
         padding: 0;
         color: #131220;
       }
 a {
-        font-style: none;
+        font-style: normal;
         color: inherit;
       }
 
@@ -52,16 +50,16 @@ a {
         background:rgb(255, 255, 255);
         background: linear-gradient(
           24deg,
-          rgb(255, 255, 255) 0%,
-          rgba(255, 255, 255, 1) 100%
+          rgb(170, 203, 247) 10%,
+          rgb(144, 199, 250) 100%
         );
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.418);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.73);
         overflow: hidden;
       }
 
      .header {
-        background: linear-gradient(0deg,rgb(255, 255, 255) 0%, rgb(144, 199, 250) 11%, rgb(72, 151, 253) 100%);
+        background: linear-gradient(0deg,rgb(255, 255, 255) 5%, rgb(144, 199, 250) 50%, rgb(72, 151, 253) 100%);
         color:rgb(0, 20, 202);
         padding: 30px 20px;
         text-align: center;
@@ -76,16 +74,17 @@ a {
       }
 
       .header h1 {
-        color: #000c1a;
+        color:rgb(0, 20, 202);
         text-shadow: 3px 3px 8px white;
         margin: 0;
         font-size: 1.8rem;
         font-weight: 800;
-        font-family: "Playfair Display", serif;
+        font-family:"TikTok Sans", sans-serif;
       }
 
       .header h1 span {
         font-size: 2rem;
+        color:rgb(255, 255, 255);
       }
 
       .content {
@@ -95,7 +94,7 @@ a {
       .content h2 {
         color:rgb(255, 255, 255);
         margin-top: 0;
-        font-family: "Playfair Display", serif;
+        font-family:"TikTok Sans", sans-serif;
       }
 
       .section {
@@ -104,8 +103,8 @@ a {
 
       .section h3 {
         margin-bottom: 10px;
-        color: #333;
-        font-family: "Playfair Display", serif;
+        color: rgb(0, 20, 202);
+        font-family: "TikTok Sans", sans-serif;
       }
 
       .button {
