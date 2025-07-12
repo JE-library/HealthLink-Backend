@@ -3,14 +3,14 @@ const {
 } = require("../../validations/appointment.validation.js");
 const response = require("../../utils/response.util");
 const {
-  findProviderById,
+  getProviderById,
 } = require("../../services/serviceProvider.service.js");
 const {
   createAppointment,
   isBooked,
   getUserAppointments,
-  getAppointmentDetails,
-  cancelUserAppointment,
+  getAppointmentDetailsUser,
+  cancelAppointmentUser,
 } = require("../../services/appointment.service.js");
 const { postNotification } = require("../../services/notification.service.js");
 const { default: mongoose } = require("mongoose");
@@ -31,7 +31,11 @@ const userAppointmentController = {
       const { date, timeSlot, mode, notes, serviceProviderId } = value;
 
       // Ensure the service provider exists
-      //   const providerExists = await findProviderById(serviceProviderId);
+      //check if the serviceProviderId is a valid MongoDB ObjectId
+      if (!mongoose.Types.ObjectId.isValid(serviceProviderId)) {
+        return res.status(400).json({ message: "Invalid Service Provider ID" });
+      }
+      const providerExists = await getProviderById(serviceProviderId);
 
       // Check if Time slot is already booked
       const slotTaken = await isBooked({
@@ -59,16 +63,16 @@ const userAppointmentController = {
 
       // 🔔 Send Notification to Service Provider
       await postNotification({
-        userId: serviceProviderId,
+        userId: providerExists._id,
         title: "New Appointment Booked",
-        message: `You have a new appointment booked by ${req.user.fullName}`,
+        message: `You have a new appointment booked by ${req.user.fullName} for ${date} at ${timeSlot}`,
         type: "info",
       });
       // 🔔 Send Notification to User
       await postNotification({
         userId: req.user._id,
         title: "Appointment Booked",
-        message: `You have booked a new appointment for ${date} at ${timeSlot}`,
+        message: `You have booked a new appointment with ${providerExists.fullName} for ${date} at ${timeSlot}`,
         type: "info",
       });
 
@@ -92,7 +96,7 @@ const userAppointmentController = {
           [],
           200,
           true,
-          "No appointments found"
+          `No Lab Request found for ${req.user.fullName}`
         );
       }
       // Respond with the all appointment
@@ -102,42 +106,45 @@ const userAppointmentController = {
     }
   },
 
-  // GET APPOINTMENT DETAILS
-  getAppointmentById: async (req, res, next) => {
+  // GET SINGLE APPOINTMENT DETAILS
+  getAppointmentByIdUser: async (req, res, next) => {
     try {
       const appointmentId = req.params.id;
 
-      const appointment = await getAppointmentDetails(
-        req.user._id,
-        appointmentId
-      );
+      //check if the appointmentId is a valid MongoDB ObjectId
+      if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
+        return res.status(400).json({ message: "Invalid Appointment ID" });
+      }
 
+      const appointment = await getAppointmentDetailsUser(appointmentId);
       if (!appointment) {
         res.status(404);
         throw new Error("Appointment not found");
       }
-
-      response(res, "appointment", appointment);
+      response(
+        res,
+        "appointment",
+        appointment,
+        200,
+        true,
+        "Appointment Retrieved Successfully."
+      );
     } catch (error) {
       next(error);
     }
   },
 
   // CANCEL APPOINTMENT
-  cancelAppointment: async (req, res, next) => {
+  cancelAppointmentUser: async (req, res, next) => {
     try {
       const appointmentId = req.params.id;
 
       //check if the appointmentId is a valid MongoDB ObjectId
+      //Find Apoointment and update Status to Cancelled
       if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
         return res.status(400).json({ message: "Invalid Apoointment ID" });
       }
-
-      //Find Apoointment and update Status to Cancelled
-      const cancelledAppointment = await cancelUserAppointment(
-        req.user._id,
-        appointmentId
-      );
+      const cancelledAppointment = await cancelAppointmentUser(appointmentId);
 
       if (!cancelledAppointment) {
         res.status(404);

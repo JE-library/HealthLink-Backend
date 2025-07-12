@@ -1,12 +1,13 @@
+const { default: mongoose } = require("mongoose");
 const {
   createLabRequest,
   isSlotTaken,
   getUserLabRequests,
-  getLabRequestDetails,
+  getUserLabRequestDetails,
   cancelUserLabRequest,
 } = require("../../services/lab.service");
 const { postNotification } = require("../../services/notification.service");
-const { findProviderById } = require("../../services/serviceProvider.service");
+const { getProviderById } = require("../../services/serviceProvider.service");
 const response = require("../../utils/response.util");
 const { labRequestSchema } = require("../../validations/labRequest.validation");
 
@@ -20,6 +21,11 @@ const userLabRequestController = {
       }
 
       const { serviceProviderId, tests, date, timeSlot, notes } = value;
+
+      //check if the labRequestId is a valid MongoDB ObjectId
+      if (!mongoose.Types.ObjectId.isValid(serviceProviderId)) {
+        return res.status(400).json({ message: "Invalid Service Provider ID" });
+      }
 
       // Check if Time slot is already booked
       const slotTaken = await isSlotTaken({
@@ -36,11 +42,11 @@ const userLabRequestController = {
       }
 
       // Ensure the service provider exists
-      //   const providerExists = await findProviderById(serviceProviderId);
+      const providerExists = await getProviderById(serviceProviderId);
 
       const labRequest = await createLabRequest({
         user: req.user._id,
-        serviceProvider: serviceProviderId,
+        serviceProvider: providerExists._id,
         tests,
         date,
         timeSlot,
@@ -49,7 +55,7 @@ const userLabRequestController = {
 
       // 🔔 Send notification to service provider
       await postNotification({
-        userId: serviceProviderId,
+        userId: providerExists._id,
         title: "New Lab Request",
         message: `New lab request from ${req.user.fullName} scheduled for ${date} at ${timeSlot}.`,
         type: "info",
@@ -59,7 +65,7 @@ const userLabRequestController = {
       await postNotification({
         userId: req.user._id,
         title: "Lab Request Booked",
-        message: `You booked a lab request for ${date} at ${timeSlot}.`,
+        message: `You booked a lab request with ${providerExists.fullName} for ${date} at ${timeSlot}.`,
         type: "info",
       });
 
@@ -93,11 +99,19 @@ const userLabRequestController = {
   },
 
   // GET LAB REQUEST DETAILS
-  getLabRequestById: async (req, res, next) => {
+  getLabRequestByIdUser: async (req, res, next) => {
     try {
       const labRequestId = req.params.id;
 
-      const labRequest = await getLabRequestDetails(req.user._id, labRequestId);
+      //check if the labRequestId is a valid MongoDB ObjectId
+      if (!mongoose.Types.ObjectId.isValid(labRequestId)) {
+        return res.status(400).json({ message: "Invalid labRequest ID" });
+      }
+
+      const labRequest = await getUserLabRequestDetails(
+        req.user._id,
+        labRequestId
+      );
 
       if (!labRequest) {
         res.status(404);
@@ -111,26 +125,27 @@ const userLabRequestController = {
   },
 
   // CANCEL  LAB REQUEST
-  cancelLabRequest: async (req, res, next) => {
+  cancelLabRequestUser: async (req, res, next) => {
     try {
       const labRequestId = req.params.id;
 
-      //Find Apoointment and update Status to Cancelled
-      const cancelledlabRequestId = await cancelUserLabRequest(
-        req.user._id,
-        labRequestId
-      );
+      //check if the labRequestId is a valid MongoDB ObjectId
+      //Find Lab Request and update Status to Cancelled
+      if (!mongoose.Types.ObjectId.isValid(labRequestId)) {
+        return res.status(400).json({ message: "Invalid labRequest ID" });
+      }
+      const cancelledlabRequest = await cancelUserLabRequest(labRequestId);
 
-      if (!cancelledlabRequestId) {
+      if (!cancelledlabRequest) {
         res.status(404);
         throw new Error("Lab Request not found or already cancelled");
       }
 
       // 🔔 Notify provider of cancellation
       await postNotification({
-        userId: cancelledlabRequestId.serviceProvider,
+        userId: cancelledlabRequest.serviceProvider._id,
         title: "Lab Request Cancelled",
-        message: `${req.user.fullName} cancelled their lab request scheduled for ${cancelledlabRequestId.date} at ${cancelledlabRequestId.timeSlot}.`,
+        message: `${req.user.fullName} cancelled their lab request scheduled for ${cancelledlabRequest.date} at ${cancelledlabRequest.timeSlot}.`,
         type: "alert",
       });
 
@@ -138,7 +153,7 @@ const userLabRequestController = {
       await postNotification({
         userId: req.user._id,
         title: "Your Lab Request was Cancelled",
-        message: `You cancelled your lab request for ${cancelledlabRequestId.date} at ${cancelledlabRequestId.timeSlot}.`,
+        message: `You cancelled your lab request with ${cancelledlabRequest.serviceProvider.fullName} for ${cancelledlabRequest.date} at ${cancelledlabRequest.timeSlot}.`,
         type: "alert",
       });
 

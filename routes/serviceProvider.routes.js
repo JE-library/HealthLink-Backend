@@ -13,6 +13,18 @@ const {
   toggleProviderAvailability,
   changeProviderPassword,
 } = require("../controllers/serviceProvider/providerProfile.controller.js");
+// Appointment Controllers
+const {
+  getAppointmentsProvider,
+  getAppointmentByIdProvider,
+  cancelProviderAppointment,
+} = require("../controllers/serviceProvider/providerAppointment.controller.js");
+// Lab Controllers
+const {
+  getLabRequestsProvider,
+  getLabRequestByIdProvider,
+  cancelLabRequestProvider,
+} = require("../controllers/serviceProvider/providerLabService.controller.js");
 
 // File Upload Middileware
 const {
@@ -49,17 +61,17 @@ router.put("/password", protected, changeProviderPassword);
 // Get all Appointments Route
 // Get single Appointment Route
 // Cancel Appointment Route
-// router.get("/appointments", protected, getProviderAppointments);
-// router.get("/appointments/:id", protected, getAppointmentDetails);
-// router.put("/appointments/:id/status", protected, cancelProviderAppointment);
+router.get("/appointments", protected, getAppointmentsProvider);
+router.get("/appointments/:id", protected, getAppointmentByIdProvider);
+router.delete("/appointments/:id/status", protected, cancelProviderAppointment);
 
 // PROVIDER LAB-REQUEST ROUTES
 // Get all lab requests Route
 // Get single lab request Route
 // Cancel lab request Route
-// router.get("/lab-service", protected, getProviderLabRequests);
-// router.get("/lab-service/:id", protected, getProviderLabRequestById);
-// router.delete("/lab-service/:id", protected, cancelProviderLabRequest);
+router.get("/lab-service", protected, getLabRequestsProvider);
+router.get("/lab-service/:id", protected, getLabRequestByIdProvider);
+router.delete("/lab-service/:id", protected, cancelLabRequestProvider);
 
 // PROVIDER NOTIFICATION ROUTES
 // Get all notifications Route

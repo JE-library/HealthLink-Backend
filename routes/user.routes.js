@@ -17,15 +17,15 @@ const {
 const {
   bookAppointment,
   getAppointmentsUser,
-  getAppointmentById,
-  cancelAppointment,
+  getAppointmentByIdUser,
+  cancelAppointmentUser,
 } = require("../controllers/user/userAppointment.controller.js");
 // Lab Controllers
 const {
   bookLabService,
   getLabRequestsUser,
-  getLabRequestById,
-  cancelLabRequest,
+  getLabRequestByIdUser,
+  cancelLabRequestUser,
 } = require("../controllers/user/userLabRequest.controller.js");
 // Notification Controllers
 const {
@@ -68,8 +68,8 @@ router.put("/password", protected, changePassword);
 // Cancel Appointment Route
 router.post("/book-appointment", protected, bookAppointment);
 router.get("/appointments", protected, getAppointmentsUser);
-router.get("/appointments/:id", protected, getAppointmentById);
-router.delete("/appointments/:id", protected, cancelAppointment);
+router.get("/appointments/:id", protected, getAppointmentByIdUser);
+router.delete("/appointments/:id", protected, cancelAppointmentUser);
 
 // USER LAB-REQUEST ROUTES
 // Book lab requests Route
@@ -78,8 +78,8 @@ router.delete("/appointments/:id", protected, cancelAppointment);
 // Cancel lab request Route
 router.post("/book-lab-service", protected, bookLabService);
 router.get("/lab-service", protected, getLabRequestsUser);
-router.get("/lab-service/:id", protected, getLabRequestById);
-router.delete("/lab-service/:id", protected, cancelLabRequest);
+router.get("/lab-service/:id", protected, getLabRequestByIdUser);
+router.delete("/lab-service/:id", protected, cancelLabRequestUser);
 
 // USER NOTIFICATION ROUTES
 // Get all notifications Route

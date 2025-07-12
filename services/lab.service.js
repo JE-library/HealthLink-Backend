@@ -15,28 +15,51 @@ const labService = {
     return await LabRequest.create(data);
   },
 
-  //Get all user Lab Requests
+  //Get all Lab Requests User
   getUserLabRequests: async (userId) => {
     return await LabRequest.find({ user: userId })
       .populate("serviceProvider", "fullName specialization profilePhoto")
       .sort({ date: -1 });
   },
+  //Get all Lab Requests Provider
+  getProviderLabRequests: async (providerId) => {
+    return await LabRequest.find({ serviceProvider: providerId })
+      .populate("user", "fullName email phoneNumber profilePhoto")
+      .sort({ date: -1 });
+  },
 
-  //Get Single Lab Request details
-  getLabRequestDetails: async (userId, labRequestId) => {
+  //Get Single Lab Request details User
+  getUserLabRequestDetails: async (userId, labRequestId) => {
     return await LabRequest.findOne({
       _id: labRequestId,
       user: userId,
     }).populate("serviceProvider", "fullName specialization profilePhoto");
   },
+  //Get Single Lab Request details Provider
+  getProviderLabRequestDetails: async (providerId, labRequestId) => {
+    return await LabRequest.findOne({
+      _id: labRequestId,
+      serviceProvider: providerId,
+    }).populate("user", "fullName email phoneNumber profilePhoto");
+  },
 
-  // Cancel Lab Request
-  cancelUserLabRequest: async (userId, labRequestId) => {
+  // Cancel Lab Request user
+  cancelUserLabRequest: async (labRequestId) => {
     const labRequest = await LabRequest.findOneAndUpdate(
-      { _id: labRequestId, user: userId, status: { $ne: "cancelled" } },
+      { _id: labRequestId, status: { $ne: "cancelled" } },
       { status: "cancelled" },
       { new: true }
-    );
+    ).populate("serviceProvider", "fullName");
+
+    return labRequest;
+  },
+  // Cancel Lab Request Provider
+  cancelProviderLabRequest: async (labRequestId) => {
+    const labRequest = await LabRequest.findOneAndUpdate(
+      { _id: labRequestId, status: { $ne: "cancelled" } },
+      { status: "cancelled" },
+      { new: true }
+    ).populate("user", "fullName");
 
     return labRequest;
   },
