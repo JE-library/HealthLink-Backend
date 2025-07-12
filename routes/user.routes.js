@@ -27,11 +27,6 @@ const {
   getLabRequestByIdUser,
   cancelLabRequestUser,
 } = require("../controllers/user/userLabRequest.controller.js");
-// Notification Controllers
-const {
-  getNotifications,
-  markNotificationAsRead,
-} = require("../controllers/user/userNotification.controller.js");
 // Post Controllers
 const { getPostsUser } = require("../controllers/user/userPost.controller.js");
 
@@ -80,12 +75,6 @@ router.post("/book-lab-service", protected, bookLabService);
 router.get("/lab-service", protected, getLabRequestsUser);
 router.get("/lab-service/:id", protected, getLabRequestByIdUser);
 router.delete("/lab-service/:id", protected, cancelLabRequestUser);
-
-// USER NOTIFICATION ROUTES
-// Get all notifications Route
-// Mark notification As Read Route
-router.get("/notifications", protected, getNotifications);
-router.patch("/notifications/:id", protected, markNotificationAsRead);
 
 // USER POST ROUTES
 // Get all posts Route

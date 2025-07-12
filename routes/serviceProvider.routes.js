@@ -25,11 +25,20 @@ const {
   getLabRequestByIdProvider,
   cancelLabRequestProvider,
 } = require("../controllers/serviceProvider/providerLabService.controller.js");
+// Posts Controllers
+const {
+  createPostProvider,
+  getPostsProvider,
+  getSinglePostProvider,
+  updatePostProvider,
+  deletePostProvider,
+} = require("../controllers/serviceProvider/providerPosts.controller.js");
 
 // File Upload Middileware
 const {
   handleDocsAndProfilePic,
   handleProfilePic,
+  handlePostsImage,
 } = require("../middlewares/upload.middleware.js");
 
 // Auth Middleware
@@ -80,9 +89,15 @@ router.delete("/lab-service/:id", protected, cancelLabRequestProvider);
 // router.patch("/notifications/:id", protected, markNotificationAsRead);
 
 // USER POST ROUTES
-// Get all posts Route
 // Create posts Route
-// router.get("/posts", protected, getProviderPosts);
-// router.post("/posts", protected, createProviderPost);
+// Get all posts Route
+// Get single post Route
+// Update post Route
+// Delete post Route
+router.post("/posts", protected, handlePostsImage, createPostProvider);
+router.get("/posts", protected, getPostsProvider);
+router.get("/posts/:id", protected, getSinglePostProvider);
+router.put("/posts/:id", protected, handlePostsImage, updatePostProvider);
+router.delete("/posts/:id", protected, deletePostProvider);
 
 module.exports = router;

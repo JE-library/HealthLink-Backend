@@ -50,6 +50,8 @@ const handleFile = {
     { name: "profilePhoto", maxCount: 1 },
     { name: "certifications", maxCount: 5 },
   ]),
+  // Provider Posts
+  handlePostsImage: upload.single("postImage"),
 };
 
 module.exports = handleFile;

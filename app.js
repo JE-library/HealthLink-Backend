@@ -7,24 +7,21 @@ const errorHandler = require("./middlewares/errorHandler.middleware.js");
 const userRoutes = require("./routes/user.routes.js");
 const serviceProviderRoutes = require("./routes/serviceProvider.routes.js");
 const adminRoutes = require("./routes/admin.routes.js");
-const publicRoutes = require("./routes/public.routes.js");
+const generalRoutes = require("./routes/general.routes.js");
 
 dotenv.config();
 
 const app = express();
 
-
-
 // Middleware
 app.use(cors());
 app.use(express.json());
-
 
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/providers", serviceProviderRoutes);
 // app.use("/api/admin", adminRoutes);
-// app.use("/api", publicRoutes);
+app.use("/api", generalRoutes);
 
 // Error handler
 app.use(errorHandler);

@@ -1,16 +1,15 @@
 const { default: mongoose } = require("mongoose");
-const Notification = require("../../models/Notification");
 const {
-  getUserNotifications,
+  getNotifications,
   markAsRead,
 } = require("../../services/notification.service");
 const response = require("../../utils/response.util");
 
 const userNotificationController = {
   //GET ALL NOTIFICATION
-  getNotifications: async (req, res, next) => {
+  getAllNotifications: async (req, res, next) => {
     try {
-      const notifications = await getUserNotifications(req.user._id);
+      const notifications = await getNotifications(req.user._id);
 
       // If no notifications
       if (!notifications || notifications.length === 0) {
@@ -39,7 +38,7 @@ const userNotificationController = {
         return res.status(400).json({ message: "Invalid notification ID" });
       }
 
-      const notification = await markAsRead(notificationId, req.user._id);
+      const notification = await markAsRead(notificationId);
 
       if (!notification) {
         res.status(404);
