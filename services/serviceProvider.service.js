@@ -1,6 +1,23 @@
 const ServiceProvider = require("../models/ServiceProvider");
 
 const sPservice = {
+  // Get All Providers
+  getAdminProviders: async () => {
+    return await ServiceProvider.find();
+  },
+  //Get adminprovider by id
+  getAdminProviderById: async (id) => {
+    return await ServiceProvider.findById(id);
+  },
+  //update Admin Provider Status
+  updateAdminProviderStatus: async (id, { status, message }) => {
+    return await ServiceProvider.findByIdAndUpdate(
+      id,
+      { status: status, note: { message, date: Date.now() } },
+      { new: true }
+    );
+  },
+  //Get single provider
   getProviderById: async (id) => {
     const provider = await ServiceProvider.findById(id);
     if (!provider) {

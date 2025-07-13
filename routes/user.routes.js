@@ -35,6 +35,7 @@ const { handleProfilePic } = require("../middlewares/upload.middleware.js");
 
 // Auth Middleware
 const protected = require("../middlewares/auth.middleware.js");
+const { isUser } = require("../middlewares/role.middleware.js");
 
 // Routes
 
@@ -52,29 +53,39 @@ router.post("/login", loginUser);
 // Get Userprofile Route
 // Update Userprofile Route
 // Change UserPassword Route
-router.get("/profile", protected, getUser);
-router.put("/profile", protected, handleProfilePic, updateUser);
-router.put("/password", protected, changePassword);
+router.get("/profile", protected, isUser, getUser);
+router.put("/profile", protected, isUser, handleProfilePic, updateUser);
+router.put("/password", protected, isUser, changePassword);
 
 // USER APPOINTMENT ROUTES
 // Book Appointment Route
 // Get all Appointments Route
 // Get single Appointment Route
 // Cancel Appointment Route
-router.post("/book-appointment", protected, bookAppointment);
-router.get("/appointments", protected, getAppointmentsUser);
-router.get("/appointments/:id", protected, getAppointmentByIdUser);
-router.delete("/appointments/:id/cancel", protected, cancelAppointmentUser);
+router.post("/book-appointment", protected, isUser, bookAppointment);
+router.get("/appointments", protected, isUser, getAppointmentsUser);
+router.get("/appointments/:id", protected, isUser, getAppointmentByIdUser);
+router.delete(
+  "/appointments/:id/cancel",
+  isUser,
+  protected,
+  cancelAppointmentUser
+);
 
 // USER LAB-REQUEST ROUTES
 // Book lab requests Route
 // Get all lab requests Route
 // Get single lab request Route
 // Cancel lab request Route
-router.post("/book-lab-service", protected, bookLabService);
-router.get("/lab-service", protected, getLabRequestsUser);
-router.get("/lab-service/:id", protected, getLabRequestByIdUser);
-router.delete("/lab-service/:id/cancel", protected, cancelLabRequestUser);
+router.post("/book-lab-service", protected, isUser, bookLabService);
+router.get("/lab-service", protected, isUser, getLabRequestsUser);
+router.get("/lab-service/:id", protected, isUser, getLabRequestByIdUser);
+router.delete(
+  "/lab-service/:id/cancel",
+  protected,
+  isUser,
+  cancelLabRequestUser
+);
 
 // USER POST ROUTES
 // Get all posts Route

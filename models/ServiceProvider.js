@@ -10,14 +10,14 @@ const ServiceProviderSchema = new Schema({
   gender: { type: String, enum: ["male", "female", "other"], required: true },
   dateOfBirth: { type: Date, required: true },
   address: { type: String, required: true },
-  role: { type: String, default: "service provider" },
+  role: { type: String, default: "serviceProvider" },
   profilePhoto: {
     url: {
       type: String,
       default:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     },
-    public_id: { type: String , required: true},
+    public_id: { type: String, required: true },
   },
   // Professional Details
   professionalTitle: { type: String, required: true }, // e.g. "Dr.", "RDN", "PT"
@@ -47,7 +47,7 @@ const ServiceProviderSchema = new Schema({
     {
       title: String,
       fileUrl: String,
-      public_id: { type: String },
+      public_id: String,
       issuedBy: String,
       year: Number,
     },
@@ -91,7 +91,7 @@ const ServiceProviderSchema = new Schema({
       ref: "Appointment",
     },
   ],
-  labRequest: [
+  labRequests: [
     {
       type: Schema.Types.ObjectId,
       ref: "LabRequest",
@@ -102,9 +102,11 @@ const ServiceProviderSchema = new Schema({
     enum: ["pending", "approved", "rejected", "banned"],
     default: "pending",
   },
-  notes: [
-    { message: { type: String }, date: { type: Date, default: Date.now } },
-  ],
+  note: {
+    message: { type: String, default: "Your application is under review." },
+    date: { type: Date, default: Date.now },
+  },
+
   createdAt: { type: Date, default: Date.now },
 });
 

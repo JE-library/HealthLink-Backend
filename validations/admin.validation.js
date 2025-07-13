@@ -7,4 +7,11 @@ const createAdminSchema = Joi.object({
   phoneNumber: Joi.string().required(),
 });
 
-module.exports = { createAdminSchema };
+const updateProviderStatusSchema = Joi.object({
+  status: Joi.string()
+    .valid("pending", "approved", "rejected", "banned")
+    .required(),
+  message: Joi.string().required(),
+});
+
+module.exports = { createAdminSchema, updateProviderStatusSchema };

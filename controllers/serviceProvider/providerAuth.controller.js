@@ -93,7 +93,7 @@ const providerAuthController = {
             //upload each Certificate
             const result = await cloudinary.uploader.upload(file.path, {
               folder: "healthlink/serviceProviders/certifications",
-              resource_type: "auto", // Default is image.
+              resource_type: "raw", // Default is image.
             });
             // push each cert to  Certificate array
             certifications.push({

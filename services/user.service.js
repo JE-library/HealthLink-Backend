@@ -1,6 +1,10 @@
 const User = require("../models/User");
 
 const userService = {
+  // Get All Users
+  getAdminUsers: async (user) => {
+    return await User.find();
+  },
   // Check if user already exists by email
   checkUserExists: async (email) => {
     return await User.findOne({ email });

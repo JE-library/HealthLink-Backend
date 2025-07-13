@@ -24,6 +24,12 @@ const UserSchema = new Schema({
       ref: "Appointment",
     },
   ],
+  labRequests: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "LabRequest",
+    },
+  ],
   createdAt: { type: Date, default: Date.now },
 });
 

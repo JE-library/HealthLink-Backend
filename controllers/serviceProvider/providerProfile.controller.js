@@ -1,7 +1,5 @@
 const bcrypt = require("bcryptjs");
-const {
-  changePasswordSchema,
-} = require("../../validations/user.validation");
+const { changePasswordSchema } = require("../../validations/user.validation");
 const response = require("../../utils/response.util");
 
 const cloudinary = require("../../config/cloudinary.config");

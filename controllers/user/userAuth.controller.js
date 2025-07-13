@@ -53,7 +53,7 @@ const userAuthController = {
           public_id: result.public_id,
         };
         // Delete the local file
-        fs.unlink(req.file.path);
+        await fs.unlink(req.file.path);
       }
 
       //  Hash password
@@ -81,6 +81,7 @@ const userAuthController = {
           email: user.email,
           phoneNumber: user.phoneNumber,
           role: user.role,
+          profilePhoto: user.profilePhoto,
         },
         201
       );
