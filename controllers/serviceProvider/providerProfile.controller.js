@@ -1,9 +1,7 @@
 const bcrypt = require("bcryptjs");
 const {
-  updateUserSchema,
   changePasswordSchema,
 } = require("../../validations/user.validation");
-const { getUserById, updateUser } = require("../../services/user.service");
 const response = require("../../utils/response.util");
 
 const cloudinary = require("../../config/cloudinary.config");
@@ -74,7 +72,7 @@ const providerProfileController = {
     }
   },
   //UPDATE PROVIDER AVAILABILITY
-  updateProviderAvailability: async (req, res, next) => {
+  updateAvailabilityProvider: async (req, res, next) => {
     try {
       const { error, value } = updateProviderAvailabilitySchema.validate(
         req.body
@@ -105,7 +103,7 @@ const providerProfileController = {
   },
 
   // TOGGLE AVAILABILITY STATUS
-  toggleProviderAvailability: async (req, res, next) => {
+  toggleAvailabilityProvider: async (req, res, next) => {
     try {
       const matchedProvider = await getProviderById(req.user._id);
 
@@ -131,7 +129,7 @@ const providerProfileController = {
   },
 
   //CHANGE USER PASSWORD
-  changeProviderPassword: async (req, res, next) => {
+  changePasswordProvider: async (req, res, next) => {
     try {
       // Validate input
       const { error, value } = changePasswordSchema.validate(req.body);

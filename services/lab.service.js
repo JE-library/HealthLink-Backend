@@ -53,6 +53,26 @@ const labService = {
 
     return labRequest;
   },
+  // Confirm Lab Request Provider
+  confirmProviderLabRequest: async (labRequestId) => {
+    const labRequest = await LabRequest.findOneAndUpdate(
+      { _id: labRequestId, status: { $nin: ["cancelled", "confirmed"] } },
+      { status: "confirmed" },
+      { new: true }
+    ).populate("user", "fullName");
+
+    return labRequest;
+  },
+  // Upload Lab Result Provider
+  uploadProviderLabResult: async (labRequestId, labResult) => {
+    const labRequest = await LabRequest.findOneAndUpdate(
+      { _id: labRequestId, status: { $ne: "cancelled" } },
+      { labResult: labResult },
+      { new: true }
+    ).populate("user", "fullName");
+
+    return labRequest;
+  },
   // Cancel Lab Request Provider
   cancelProviderLabRequest: async (labRequestId) => {
     const labRequest = await LabRequest.findOneAndUpdate(

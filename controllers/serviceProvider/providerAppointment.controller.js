@@ -1,18 +1,9 @@
-const {
-  appointmentSchema,
-} = require("../../validations/appointment.validation.js");
 const response = require("../../utils/response.util");
 const {
-  findProviderById,
-} = require("../../services/serviceProvider.service.js");
-const {
-  createAppointment,
-  isBooked,
-  getUserAppointments,
-  getAppointmentDetails,
-  cancelAppointmentProvider,
   getProviderAppointments,
-  getAppointmentDetailsProvider,
+  cancelProviderAppointment,
+  getProviderAppointmentDetails,
+  confirmProviderAppointment,
 } = require("../../services/appointment.service.js");
 const { postNotification } = require("../../services/notification.service.js");
 const { default: mongoose } = require("mongoose");
@@ -52,7 +43,7 @@ const providerAppointmentController = {
       if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
         return res.status(400).json({ message: "Invalid Apoointment ID" });
       }
-      const appointment = await getAppointmentDetailsProvider(appointmentId);
+      const appointment = await getProviderAppointmentDetails(appointmentId);
 
       if (!appointment) {
         res.status(404);
@@ -71,8 +62,47 @@ const providerAppointmentController = {
     }
   },
 
+  // CONFIRM APPOINTMENT
+  confirmAppointmentProvider: async (req, res, next) => {
+    try {
+      const appointmentId = req.params.id;
+
+      //check if the appointmentId is a valid MongoDB ObjectId
+      //Find Apoointment and update Status to Confirmed
+      if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
+        return res.status(400).json({ message: "Invalid Apoointment ID" });
+      }
+      const confirmedAppointment = await confirmProviderAppointment(
+        appointmentId
+      );
+
+      if (!confirmedAppointment) {
+        res.status(404);
+        throw new Error("Appointment not found or already cancelled");
+      }
+
+      // 🔔 Notify user of cancellation
+      await postNotification({
+        userId: confirmedAppointment.user._id,
+        title: "Appointment Confirmed",
+        message: `${req.user.fullName} confirmed your appointment for ${confirmedAppointment.date} at ${confirmedAppointment.timeSlot}`,
+        type: "alert",
+      });
+      // 🔔 Send Notification to Service Provider
+      await postNotification({
+        userId: req.user._id,
+        title: "You Confirmed an Appointment",
+        message: `You Confirmed your appointment with ${confirmedAppointment.user.fullName} scheduled for ${confirmedAppointment.date} at ${confirmedAppointment.timeSlot}`,
+        type: "alert",
+      });
+
+      response(res, "info", "Appointment Confirmed successfully");
+    } catch (error) {
+      next(error);
+    }
+  },
   // CANCEL APPOINTMENT
-  cancelProviderAppointment: async (req, res, next) => {
+  cancelAppointmentProvider: async (req, res, next) => {
     try {
       const appointmentId = req.params.id;
 
@@ -81,7 +111,7 @@ const providerAppointmentController = {
       if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
         return res.status(400).json({ message: "Invalid Apoointment ID" });
       }
-      const cancelledAppointment = await cancelAppointmentProvider(
+      const cancelledAppointment = await cancelProviderAppointment(
         appointmentId
       );
 

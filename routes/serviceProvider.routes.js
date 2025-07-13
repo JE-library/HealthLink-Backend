@@ -9,20 +9,23 @@ const {
 const {
   getProvider,
   updateProvider,
-  updateProviderAvailability,
-  toggleProviderAvailability,
-  changeProviderPassword,
+  updateAvailabilityProvider,
+  toggleAvailabilityProvider,
+  changePasswordProvider,
 } = require("../controllers/serviceProvider/providerProfile.controller.js");
 // Appointment Controllers
 const {
   getAppointmentsProvider,
   getAppointmentByIdProvider,
-  cancelProviderAppointment,
+  confirmAppointmentProvider,
+  cancelAppointmentProvider,
 } = require("../controllers/serviceProvider/providerAppointment.controller.js");
 // Lab Controllers
 const {
   getLabRequestsProvider,
   getLabRequestByIdProvider,
+  confirmLabRequestProvider,
+  uploadLabResultProvider,
   cancelLabRequestProvider,
 } = require("../controllers/serviceProvider/providerLabService.controller.js");
 // Posts Controllers
@@ -39,6 +42,7 @@ const {
   handleDocsAndProfilePic,
   handleProfilePic,
   handlePostsImage,
+  handleLabResult,
 } = require("../middlewares/upload.middleware.js");
 
 // Auth Middleware
@@ -62,25 +66,40 @@ router.post("/login", loginProvider);
 // Change Provider Route
 router.get("/profile", protected, getProvider);
 router.put("/profile", protected, handleProfilePic, updateProvider);
-router.put("/availability", protected, updateProviderAvailability);
-router.patch("/is-available", protected, toggleProviderAvailability);
-router.put("/password", protected, changeProviderPassword);
+router.put("/availability", protected, updateAvailabilityProvider);
+router.patch("/is-available", protected, toggleAvailabilityProvider);
+router.put("/password", protected, changePasswordProvider);
 
 // PROVIDER APPOINTMENT ROUTES
 // Get all Appointments Route
 // Get single Appointment Route
+// Confirm an Appointment Route
 // Cancel Appointment Route
 router.get("/appointments", protected, getAppointmentsProvider);
 router.get("/appointments/:id", protected, getAppointmentByIdProvider);
-router.delete("/appointments/:id/status", protected, cancelProviderAppointment);
+router.patch(
+  "/appointments/:id/confirm",
+  protected,
+  confirmAppointmentProvider
+);
+router.delete("/appointments/:id/cancel", protected, cancelAppointmentProvider);
 
 // PROVIDER LAB-REQUEST ROUTES
 // Get all lab requests Route
 // Get single lab request Route
+// Confirm a lab request Route
+// Upload a lab Result Route
 // Cancel lab request Route
 router.get("/lab-service", protected, getLabRequestsProvider);
 router.get("/lab-service/:id", protected, getLabRequestByIdProvider);
-router.delete("/lab-service/:id", protected, cancelLabRequestProvider);
+router.patch("/lab-service/:id/confirm", protected, confirmLabRequestProvider);
+router.put(
+  "/lab-service/:id/result",
+  protected,
+  handleLabResult,
+  uploadLabResultProvider
+);
+router.delete("/lab-service/:id/cancel", protected, cancelLabRequestProvider);
 
 // PROVIDER NOTIFICATION ROUTES
 // Get all notifications Route
@@ -98,6 +117,6 @@ router.post("/posts", protected, handlePostsImage, createPostProvider);
 router.get("/posts", protected, getPostsProvider);
 router.get("/posts/:id", protected, getSinglePostProvider);
 router.put("/posts/:id", protected, handlePostsImage, updatePostProvider);
-router.delete("/posts/:id", protected, deletePostProvider);
+router.delete("/posts/:id/delete", protected, deletePostProvider);
 
 module.exports = router;

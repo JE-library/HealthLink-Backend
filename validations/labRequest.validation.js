@@ -7,7 +7,11 @@ const labRequestSchema = Joi.object({
   timeSlot: Joi.string().required(),
   notes: Joi.string().optional().allow(""),
 });
+const labReqsultSchema = Joi.object({
+  labResult: Joi.string().uri().optional(),
+});
 
 module.exports = {
   labRequestSchema,
+  labReqsultSchema,
 };

@@ -52,6 +52,8 @@ const handleFile = {
   ]),
   // Provider Posts
   handlePostsImage: upload.single("postImage"),
+  // Provider Lab Result
+  handleLabResult: upload.single("labResult"),
 };
 
 module.exports = handleFile;

@@ -25,7 +25,7 @@ const appointmentServices = {
   },
 
   //Get Single Appointment details User
-  getAppointmentDetailsUser: async (appointmentId) => {
+  getUserAppointmentDetails: async (appointmentId) => {
     const appointment = await Appointment.findOne({
       _id: appointmentId,
     }).populate("serviceProvider", "fullName specialization profilePhoto");
@@ -33,7 +33,7 @@ const appointmentServices = {
     return appointment;
   },
   //Get Single Appointment details Provider
-  getAppointmentDetailsProvider: async (appointmentId) => {
+  getProviderAppointmentDetails: async (appointmentId) => {
     const appointment = await Appointment.findOne({
       _id: appointmentId,
     }).populate("user", "fullName email phoneNumber profilePhoto");
@@ -42,7 +42,7 @@ const appointmentServices = {
   },
 
   // Cancel Appointment User
-  cancelAppointmentUser: async (appointmentId) => {
+  cancelUserAppointment: async (appointmentId) => {
     const appointment = await Appointment.findOneAndUpdate(
       { _id: appointmentId, status: { $ne: "cancelled" } },
       { status: "cancelled" },
@@ -50,8 +50,21 @@ const appointmentServices = {
     ).populate("serviceProvider", "fullname");
     return appointment;
   },
+  // Confirm Appointment Provider
+  confirmProviderAppointment: async (appointmentId) => {
+    const appointment = await Appointment.findOneAndUpdate(
+      {
+        _id: appointmentId,
+        status: { $nin: ["confirmed", "cancelled"] },
+      },
+      { status: "confirmed" },
+      { new: true }
+    ).populate("user", "fullName");
+
+    return appointment; 
+  },
   // Cancel Appointment Provider
-  cancelAppointmentProvider: async (appointmentId) => {
+  cancelProviderAppointment: async (appointmentId) => {
     const appointment = await Appointment.findOneAndUpdate(
       { _id: appointmentId, status: { $ne: "cancelled" } },
       { status: "cancelled" },

@@ -64,7 +64,7 @@ router.put("/password", protected, changePassword);
 router.post("/book-appointment", protected, bookAppointment);
 router.get("/appointments", protected, getAppointmentsUser);
 router.get("/appointments/:id", protected, getAppointmentByIdUser);
-router.delete("/appointments/:id", protected, cancelAppointmentUser);
+router.delete("/appointments/:id/cancel", protected, cancelAppointmentUser);
 
 // USER LAB-REQUEST ROUTES
 // Book lab requests Route
@@ -74,7 +74,7 @@ router.delete("/appointments/:id", protected, cancelAppointmentUser);
 router.post("/book-lab-service", protected, bookLabService);
 router.get("/lab-service", protected, getLabRequestsUser);
 router.get("/lab-service/:id", protected, getLabRequestByIdUser);
-router.delete("/lab-service/:id", protected, cancelLabRequestUser);
+router.delete("/lab-service/:id/cancel", protected, cancelLabRequestUser);
 
 // USER POST ROUTES
 // Get all posts Route

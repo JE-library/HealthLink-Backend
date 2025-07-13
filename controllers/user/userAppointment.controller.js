@@ -9,8 +9,8 @@ const {
   createAppointment,
   isBooked,
   getUserAppointments,
-  getAppointmentDetailsUser,
-  cancelAppointmentUser,
+  cancelUserAppointment,
+  getUserAppointmentDetails,
 } = require("../../services/appointment.service.js");
 const { postNotification } = require("../../services/notification.service.js");
 const { default: mongoose } = require("mongoose");
@@ -116,7 +116,7 @@ const userAppointmentController = {
         return res.status(400).json({ message: "Invalid Appointment ID" });
       }
 
-      const appointment = await getAppointmentDetailsUser(appointmentId);
+      const appointment = await getUserAppointmentDetails(appointmentId);
       if (!appointment) {
         res.status(404);
         throw new Error("Appointment not found");
@@ -144,7 +144,7 @@ const userAppointmentController = {
       if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
         return res.status(400).json({ message: "Invalid Apoointment ID" });
       }
-      const cancelledAppointment = await cancelAppointmentUser(appointmentId);
+      const cancelledAppointment = await cancelUserAppointment(appointmentId);
 
       if (!cancelledAppointment) {
         res.status(404);
