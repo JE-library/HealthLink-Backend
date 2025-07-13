@@ -97,17 +97,8 @@ const providerAuthController = {
             });
             // push each cert to  Certificate array
             certifications.push({
-              fileUrl: result.secure_url,
+              certificate: result.secure_url,
               public_id: result.public_id,
-              title: Array.isArray(req.body.title)
-                ? req.body.title[i] || ""
-                : req.body.title || "",
-              issuedBy: Array.isArray(req.body.issuedBy)
-                ? req.body.issuedBy[i] || ""
-                : req.body.issuedBy || "",
-              year: Array.isArray(req.body.year)
-                ? req.body.year[i] || null
-                : req.body.year || null,
             });
 
             await fs.unlink(file.path);

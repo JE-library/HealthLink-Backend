@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   gender: { type: String, enum: ["male", "female", "other"], required: true },
   dateOfBirth: { type: Date, required: true },
   role: { type: String, default: "user" },
-  address: { type: String, required: true },
+  address: { type: String, default: "" },
   profilePhoto: {
     url: {
       type: String,

@@ -7,7 +7,7 @@ const registerUserSchema = Joi.object({
   password: Joi.string().min(6).required(),
   gender: Joi.string().valid("male", "female", "other").required(),
   dateOfBirth: Joi.date().less("now").required(),
-  address: Joi.string().min(3).required(),
+  address: Joi.string().min(3).optional(),
   profilePhoto: Joi.string().uri().optional(),
 });
 

@@ -43,16 +43,13 @@ const ServiceProviderSchema = new Schema({
     },
   ],
   bio: { type: String, maxlength: 1000 },
+
   certifications: [
     {
-      title: String,
-      fileUrl: String,
+      certificate: String,
       public_id: String,
-      issuedBy: String,
-      year: Number,
     },
   ],
-
   consultationModes: {
     video: { type: Boolean, default: false },
     chat: { type: Boolean, default: true },
