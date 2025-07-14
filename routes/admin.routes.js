@@ -22,29 +22,30 @@ const {
 const {
   getAppointmentsAdmin,
   getAppointmentByIdAdmin,
-  changeAppointmentStatusAdmin,
+  updateAppointmentStatusAdmin,
   deleteAppointmentAdmin,
-} = require("../controllers/serviceProvider/providerAppointment.controller.js");
+} = require("../controllers/admin/adminAppointments.controller.js");
 // Lab Controllers
 const {
   getLabRequestsAdmin,
   getLabRequestByIdAdmin,
-  changeLabRequestStatusAdmin,
+  updateLabRequestStatusAdmin,
   deleteLabRequestAdmin,
-} = require("../controllers/serviceProvider/providerLabService.controller.js");
+} = require("../controllers/admin/adminLabServices.controller.js");
 // Posts Controllers
 const {
   getPostsAdmin,
   getPostDetailsAdmin,
   deletePostAdmin,
-} = require("../controllers/serviceProvider/providerPosts.controller.js");
+} = require("../controllers/admin/adminPosts.controller.js");
 // Overview Controllers
 const {
   getOverviewAdmin,
-} = require("../controllers/serviceProvider/providerPosts.controller.js");
+} = require("../controllers//admin/adminOverview.controller.js");
 
 // Auth Middleware
 const protected = require("../middlewares/auth.middleware.js");
+const { isAdmin } = require("../middlewares/role.middleware.js");
 
 // PROVIDER AUTH ROUTES
 // Admin registration route
@@ -60,54 +61,75 @@ router.post("/login", loginAdmin);
 // Get all users Route
 // Get single user Route
 // Delete a user Route
-router.get("/users", protected, getUsersAdmin);
-router.get("/users/:id", protected, getUserDetailsAdmin);
-router.delete("/users/:id/delete", protected, deleteUserAdmin);
+router.get("/users", protected, isAdmin, getUsersAdmin);
+router.get("/users/:id", protected, isAdmin, getUserDetailsAdmin);
+router.delete("/users/:id/delete", isAdmin, protected, deleteUserAdmin);
 
 // PROVIDER ROUTES
 // Get all providers Route
 // Get single provider Route
 // Update provider Application Status Route
 // Delete provider Route
-router.get("/providers", protected, getProvidersAdmin);
-router.get("/providers/:id", protected, getProviderDetailsAdmin);
-router.put("/providers/:id/status", protected, updateProviderStatusAdmin);
-router.delete("/providers/:id/delete", protected, deleteProviderAdmin);
+router.get("/providers", protected, isAdmin, getProvidersAdmin);
+router.get("/providers/:id", protected, isAdmin, getProviderDetailsAdmin);
+router.put(
+  "/providers/:id/status",
+  protected,
+  isAdmin,
+  updateProviderStatusAdmin
+);
+router.delete("/providers/:id/delete", protected, isAdmin, deleteProviderAdmin);
 
 // APPOINTMENT ROUTES
 // Get all Appointments Route
 // Get single Appointment Route
 // Change Appointment status Route
 // Delete Appointment Route
-// router.get("/appointments", protected, getAppointmentsAdmin);
-// router.get("/appointments/:id", protected, getAppointmentByIdAdmin);
-// router.patch(
-//   "/appointments/:id/status",
-//   protected,
-//   changeAppointmentStatusAdmin
-// );
-// router.delete("/appointments/:id/delete", protected, deleteAppointmentAdmin);
+router.get("/appointments", protected, isAdmin, getAppointmentsAdmin);
+router.get("/appointments/:id", protected, isAdmin, getAppointmentByIdAdmin);
+router.patch(
+  "/appointments/:id/status",
+  protected,
+  isAdmin,
+  updateAppointmentStatusAdmin
+);
+router.delete(
+  "/appointments/:id/delete",
+  protected,
+  isAdmin,
+  deleteAppointmentAdmin
+);
 
 // LAB-REQUEST ROUTES
 // Get all lab requests Route
 // Get single lab request Route
 // Change lab request status Route
 // Delete lab request Route
-// router.get("/lab-service", protected, getLabRequestsAdmin);
-// router.get("/lab-service/:id", protected, getLabRequestByIdAdmin);
-// router.patch("/lab-service/:id/status", protected, changeLabRequestStatusAdmin);
-// router.delete("/lab-service/:id/delete", protected, deleteLabRequestAdmin);
+router.get("/lab-services", protected, isAdmin, getLabRequestsAdmin);
+router.get("/lab-services/:id", protected, isAdmin, getLabRequestByIdAdmin);
+router.patch(
+  "/lab-services/:id/status",
+  protected,
+  isAdmin,
+  updateLabRequestStatusAdmin
+);
+router.delete(
+  "/lab-services/:id/delete",
+  protected,
+  isAdmin,
+  deleteLabRequestAdmin
+);
 
 // POST ROUTES
 // Get all posts Route
 // Get single post Route
 // Delete post Route
-// router.get("/posts", protected, getPostsAdmin);
-// router.get("/posts/:id", protected, getPostDetailsAdmin);
-// router.delete("/posts/:id/delete", protected, deletePostAdmin);
+router.get("/posts", protected, isAdmin, getPostsAdmin);
+router.get("/posts/:id", protected, isAdmin, getPostDetailsAdmin);
+router.delete("/posts/:id/delete", protected, isAdmin, deletePostAdmin);
 
 // OVERVIEW ROUTES
 // Get Overview route // Dashboard: stats of users, providers, etc
-// router.get("/overview", protected, getOverviewAdmin);
+router.get("/overview", protected, isAdmin, getOverviewAdmin);
 
 module.exports = router;

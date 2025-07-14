@@ -11,9 +11,9 @@ const roleChecker = {
       res,
       "error",
       "Access denied. Admins only.",
-      403,
+      401,
       false,
-      "Unauthorized"
+      "Unauthorized" 
     );
   },
 
@@ -32,7 +32,7 @@ const roleChecker = {
       req.user?.status !== "approved"
         ? "Your account is not approved yet."
         : "Access denied. Service providers only.",
-      403,
+      401,
       false,
       "Unauthorized"
     );
@@ -47,7 +47,7 @@ const roleChecker = {
       res,
       "error",
       "Access denied. Users only.",
-      403,
+      401,
       false,
       "Unauthorized"
     );

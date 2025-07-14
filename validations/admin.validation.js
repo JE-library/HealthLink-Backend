@@ -14,4 +14,20 @@ const updateProviderStatusSchema = Joi.object({
   message: Joi.string().required(),
 });
 
-module.exports = { createAdminSchema, updateProviderStatusSchema };
+const updateAppointmentStatusSchema = Joi.object({
+  status: Joi.string()
+    .valid("pending", "confirmed", "cancelled", "completed")
+    .required(),
+});
+const updateLabRequestStatusSchema = Joi.object({
+  status: Joi.string()
+    .valid("pending", "confirmed", "cancelled", "completed")
+    .required(),
+});
+
+module.exports = {
+  createAdminSchema,
+  updateProviderStatusSchema,
+  updateAppointmentStatusSchema,
+  updateLabRequestStatusSchema,
+};

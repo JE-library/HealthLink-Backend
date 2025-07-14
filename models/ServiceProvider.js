@@ -82,18 +82,7 @@ const ServiceProviderSchema = new Schema({
       createdAt: { type: Date, default: Date.now },
     },
   ],
-  appointments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Appointment",
-    },
-  ],
-  labRequests: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "LabRequest",
-    },
-  ],
+
   status: {
     type: String,
     enum: ["pending", "approved", "rejected", "banned"],

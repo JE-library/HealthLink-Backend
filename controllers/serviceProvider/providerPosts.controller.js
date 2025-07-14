@@ -19,17 +19,6 @@ const providerPostController = {
   //CREATE POST PROVIDER
   createPostProvider: async (req, res, next) => {
     try {
-      if (req.user.role !== "service provider") {
-        return response(
-          res,
-          "Unauthorised",
-          [],
-          401,
-          false,
-          `${req.user.fullName}, Login as a Service provider to post`
-        );
-      }
-
       const { title, description, categories, tags } = req.body;
       const { error, value } = postSchema.validate(req.body);
       if (error) {

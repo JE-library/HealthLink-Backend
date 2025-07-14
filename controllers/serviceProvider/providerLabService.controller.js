@@ -134,13 +134,17 @@ const providerLabRequestController = {
       // delete old file if theres any
       // handle upload new file
       if (labRequestExists.labResult.public_id) {
-        await cloudinary.uploader.destroy(labRequestExists.labResult.public_id);
+        await cloudinary.uploader.destroy(
+          labRequestExists.labResult.public_id,
+          { resource_type: "raw" }
+        );
       }
 
       const file = req.file;
       if (file) {
         const upload = await cloudinary.uploader.upload(file.path, {
           folder: "healthlink/serviceProviders/labResults",
+          resource_type: "raw",
         });
         value.labResult = {
           url: upload.secure_url,

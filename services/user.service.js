@@ -7,7 +7,8 @@ const userService = {
   },
   // Check if user already exists by email
   checkUserExists: async (email) => {
-    return await User.findOne({ email });
+    const user = await User.findOne({ email });
+    return user;
   },
 
   // Create a new user
@@ -19,7 +20,6 @@ const userService = {
     return await User.findById(id);
   },
   // Update user
-
   updateUser: async (id, updateData) => {
     return await User.findByIdAndUpdate(id, updateData, { new: true }).select(
       "-password"

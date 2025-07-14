@@ -11,6 +11,10 @@ const appointmentServices = {
     return await Appointment.create(appointment);
   },
 
+  //Get all Appointments Admin
+  getAdminAppointments: async (userId) => {
+    return await Appointment.find();
+  },
   //Get all Appointments User
   getUserAppointments: async (userId) => {
     return await Appointment.find({ user: userId })
@@ -24,6 +28,16 @@ const appointmentServices = {
       .sort({ date: -1 });
   },
 
+  //Get Single Appointment details Admin
+  getAdminAppointmentDetails: async (appointmentId) => {
+    const appointment = await Appointment.findOne({
+      _id: appointmentId,
+    })
+      .populate("serviceProvider", "fullName specialization profilePhoto")
+      .populate("user", "fullName email phoneNumber profilePhoto");
+
+    return appointment;
+  },
   //Get Single Appointment details User
   getUserAppointmentDetails: async (appointmentId) => {
     const appointment = await Appointment.findOne({
@@ -39,6 +53,10 @@ const appointmentServices = {
     }).populate("user", "fullName email phoneNumber profilePhoto");
 
     return appointment;
+  },
+  //update Admin Appointment Status
+  updateAdminAppointmentStatus: async (id, { status }) => {
+    return await Appointment.findByIdAndUpdate(id, { status }, { new: true });
   },
 
   // Cancel Appointment User
@@ -61,7 +79,7 @@ const appointmentServices = {
       { new: true }
     ).populate("user", "fullName");
 
-    return appointment; 
+    return appointment;
   },
   // Cancel Appointment Provider
   cancelProviderAppointment: async (appointmentId) => {

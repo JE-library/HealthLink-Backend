@@ -18,18 +18,6 @@ const UserSchema = new Schema({
     },
     public_id: { type: String },
   },
-  appointments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Appointment",
-    },
-  ],
-  labRequests: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "LabRequest",
-    },
-  ],
   createdAt: { type: Date, default: Date.now },
 });
 

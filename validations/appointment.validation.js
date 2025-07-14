@@ -10,6 +10,7 @@ const appointmentSchema = Joi.object({
   notes: Joi.string().optional(),
 });
 
+
 module.exports = {
   appointmentSchema,
 };

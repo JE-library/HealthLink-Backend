@@ -15,17 +15,34 @@ const labService = {
     return await LabRequest.create(data);
   },
 
+  //Get all Appointments Admin
+  getAdminLabRequests: async (userId) => {
+    return await LabRequest.find();
+  },
+
   //Get all Lab Requests User
   getUserLabRequests: async (userId) => {
     return await LabRequest.find({ user: userId })
       .populate("serviceProvider", "fullName specialization profilePhoto")
       .sort({ date: -1 });
   },
+
   //Get all Lab Requests Provider
   getProviderLabRequests: async (providerId) => {
     return await LabRequest.find({ serviceProvider: providerId })
       .populate("user", "fullName email phoneNumber profilePhoto")
       .sort({ date: -1 });
+  },
+
+  //Get Single Appointment details Admin
+  getAdminLabRequestDetails: async (labRequestId) => {
+    const labRequest = await LabRequest.findOne({
+      _id: labRequestId,
+    })
+      .populate("serviceProvider", "fullName specialization profilePhoto")
+      .populate("user", "fullName email phoneNumber profilePhoto");
+
+    return labRequest;
   },
 
   //Get Single Lab Request details User
@@ -41,6 +58,11 @@ const labService = {
       _id: labRequestId,
       serviceProvider: providerId,
     }).populate("user", "fullName email phoneNumber profilePhoto");
+  },
+
+  //update Admin Lab Request Status
+  updateAdminLabRequestStatus: async (id, { status }) => {
+    return await LabRequest.findByIdAndUpdate(id, { status }, { new: true });
   },
 
   // Cancel Lab Request user

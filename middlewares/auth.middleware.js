@@ -12,13 +12,12 @@ const protected = async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
-     
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
       if (decoded.role === "user") {
         req.user = await User.findById(decoded.id).select("-password");
-      } else if (decoded.role === "service provider") {
+      } else if (decoded.role === "serviceProvider") {
         req.user = await ServiceProvider.findById(decoded.id).select(
           "-password"
         );
