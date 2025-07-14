@@ -23,18 +23,18 @@ app.use(express.json());
 // Routes
 app.use("/api/users", userRoutes);
 
-// //TESTING IF UPLOAD WORKS
-// app.post("/api/testinguploads", upload.single("avatar"), (req, res) =>{
-//   cloudinary.uploader.upload('avatar'), //NEED TO WORK ON CLOUDINARY POSTING
-//   res.send("Uploaded")
-// })
+//TESTING IF UPLOAD WORKS
+app.post("/api/testinguploads", upload.single("avatar"), (req, res) =>{
+  cloudinary.uploader.upload('avatar'), //NEED TO WORK ON CLOUDINARY POSTING
+  res.send("Uploaded")
+})
 
-// // TESTING IF EMAIL WORKS
-// app.get("/api/testemail", async (req, res)=> {
-//   const user = {email:'jackie.creative233@gmail.com'}
-//   await sendEmail(user)
-//   res.send("Email Sent")
-// });
+// TESTING IF EMAIL WORKS
+app.get("/api/testemail", async (req, res)=> {
+  const user = {email:'jackie.creative233@gmail.com'}
+  await sendEmail(user)
+  res.send("Email Sent")
+});
 
 
 // app.use("/api/providers", serviceProviderRoutes);

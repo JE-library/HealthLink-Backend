@@ -47,11 +47,10 @@ a {
       .container {
         max-width: 600px;
         margin: 30px auto;
-        background:rgb(255, 255, 255);
         background: linear-gradient(
           24deg,
           rgb(170, 203, 247) 10%,
-          rgb(144, 199, 250) 100%
+          rgb(255, 255, 255) 70%
         );
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.73);
@@ -59,11 +58,11 @@ a {
       }
 
      .header {
-        background: linear-gradient(0deg,rgb(255, 255, 255) 5%, rgb(144, 199, 250) 50%, rgb(72, 151, 253) 100%);
-        color:rgb(0, 20, 202);
+        background: rgb(144, 199, 250)50%;
+        color:rgb(255, 255, 255);
         padding: 30px 20px;
         text-align: center;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.281);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.281);
         overflow: hidden;
       }
 
@@ -74,17 +73,17 @@ a {
       }
 
       .header h1 {
-        color:rgb(0, 20, 202);
-        text-shadow: 3px 3px 8px white;
+        color:rgb(255, 255, 255);
+        text-shadow: 3px 3px 8px rgb(0, 0, 0) ;
         margin: 0;
         font-size: 1.8rem;
         font-weight: 800;
         font-family:"TikTok Sans", sans-serif;
       }
 
-      .header h1 span {
-        font-size: 2rem;
-        color:rgb(255, 255, 255);
+      .content h2 span {
+        font-size: 3rem;
+        color:rgb(72, 151, 253);
       }
 
       .content {
@@ -92,17 +91,22 @@ a {
       }
 
       .content h2 {
-        color:rgb(255, 255, 255);
+        color:rgb(144, 199, 250);
         margin-top: 0;
         font-family:"TikTok Sans", sans-serif;
+      }
+      .content p {
+      font-size: 1rem;
       }
 
       .section {
         margin-bottom: 25px;
+        font-family: "TikTok Sans", sans-serif;
       }
 
       .section h3 {
         margin-bottom: 10px;
+        font-size: 1rem;
         color: rgb(0, 20, 202);
         font-family: "TikTok Sans", sans-serif;
       }
@@ -113,9 +117,13 @@ a {
         color:rgb(255, 255, 255);
         text-decoration: none;
         padding: 12px 25px;
-        border-radius: 6px;
+        border-radius: 15px;
         font-weight: bold;
         margin-top: 20px;
+      }
+      
+      .container span {
+      font-size: 2rem;
       }
 
       .footer {
@@ -129,31 +137,24 @@ a {
   <body>
     <div class="container">
       <div class="header">
-        <h1>Welcome to <br /><span>HealthLink</span></h1>
-        <p>Your gateway to all your Healthcare needs from the safety of your home.</p>
+        <h4> <span> HealthLink </span> <br /> The gateway to all your Healthcare needs from the safety of your home. </h4>
       </div>
 
       <div class="content">
-        <h2>Hello ${user.username},</h2>
+         <h2> Welcome ${user.fullName}, you've just signed up with <br /> <span> HealthLink. </span> </h2>
         <p>
-          Thanks for joining HealthLink! Here's what you can expect with us:
+          Thanks for joining our community! Here's what you can expect with us:
         </p>
 
         <div class="section">
           <h3>For our Service Providers:</h3>
           <ul>
             <li>
-              Get all your appointments, whether it be appointment details, cancellations, conducting consultations, getting available slots and updating available slots.
+              You can get all your appointments, whether it be appointment details, cancellations, conducting consultations, getting available slots and updating available slots. 
             </li>
             <li>
-              Create Wellness or nutrition posts, as well as update and delete your posts.
-            </li>
-            <li>
-              Schedule Livechat sessions with clients who have selected appointments.
-            </li>
-            <li>
-              Use your dashboard to
-              <strong>view, edit, and delete</strong> your posts and appointments easily.
+              Schedule Livechat sessions with clients who have selected appointments and Use your dashboard to
+              <strong>view, edit, and delete</strong> your posts and appointments easily as well as Create Wellness or nutritional posts.
             </li>
           </ul>
         </div>
@@ -161,18 +162,7 @@ a {
         <div class="section">
           <h3>For our Users:</h3>
           <ul>
-            <li>Book consultations with service providers </li>
-            <li>
-              Get all user notifications like booked appointments with details or cancelled appointments.
-            </li>
-            <li>
-              View all wellness and nutrition posts as well as availability of ambulance services
-            </li>
-            <li>
-              Request ambulance service.
-            </li>
-            <li>
-            Schedule home lab tests.
+            <li>Book consultations with service providers and <strong> Schedule home lab tests. </strong> Your notifications like booked appointments with details or cancelled appointments can all be accessed while Viewing wellness and nutritional posts as well as <strong> requesting availability of ambulance services. </strong>
             </li>
           </ul>
         </div>
