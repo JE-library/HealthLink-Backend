@@ -29,6 +29,10 @@ const {
 } = require("../controllers/user/userLabRequest.controller.js");
 // Post Controllers
 const { getPostsUser } = require("../controllers/user/userPost.controller.js");
+// Overview Controllers
+const {
+  getOverviewUser,
+} = require("../controllers/user/userOverview.controller.js");
 
 // File Upload Middileware
 const { handleProfilePic } = require("../middlewares/upload.middleware.js");
@@ -90,5 +94,9 @@ router.delete(
 // USER POST ROUTES
 // Get all posts Route
 router.get("/posts", protected, getPostsUser);
+
+// USER OVERVIEW ROUTES
+// Get Overview route // Dashboard: stats of Appointments, LabRequets, etc
+router.get("/overview", protected, isUser, getOverviewUser);
 
 module.exports = router;

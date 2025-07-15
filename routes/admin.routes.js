@@ -40,8 +40,8 @@ const {
 } = require("../controllers/admin/adminPosts.controller.js");
 // Overview Controllers
 const {
-  getOverviewAdmin,
-} = require("../controllers//admin/adminOverview.controller.js");
+  getOverviewAdmin
+} = require("../controllers/admin/adminOverview.controller.js");
 
 // Auth Middleware
 const protected = require("../middlewares/auth.middleware.js");

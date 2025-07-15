@@ -36,6 +36,10 @@ const {
   updatePostProvider,
   deletePostProvider,
 } = require("../controllers/serviceProvider/providerPosts.controller.js");
+// Overview Controllers
+const {
+  getOverviewProvider,
+} = require("../controllers/serviceProvider/providerOverview.controller.js");
 
 // File Upload Middileware
 const {
@@ -140,7 +144,7 @@ router.delete(
 // router.get("/notifications", protected, getNotifications);
 // router.patch("/notifications/:id", protected, markNotificationAsRead);
 
-// USER POST ROUTES
+// PROVIDER POST ROUTES
 // Create posts Route
 // Get all posts Route
 // Get single post Route
@@ -163,5 +167,9 @@ router.put(
   updatePostProvider
 );
 router.delete("/posts/:id/delete", isProvider, protected, deletePostProvider);
+
+// PROVIDER OVERVIEW ROUTES
+// Get Overview route // Dashboard: stats of Appointments, LabRequets, etc
+router.get("/overview", protected, isProvider, getOverviewProvider);
 
 module.exports = router;
