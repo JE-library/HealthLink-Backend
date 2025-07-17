@@ -20,166 +20,119 @@ const sendEmail = async (user) => {
       to: user.email,
       subject: "Welcome to HealthLink",
       html: `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to HealthLink</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:opsz,wght@12..36,300..900&display=swap" rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "TikTok Sans", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal;
-        background-color:rgb(144, 199, 250);
-        margin: 0;
-        padding: 0;
-        color: #131220;
-      }
-a {
-        font-style: normal;
-        color: inherit;
-      }
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to HealthLink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f0f8ff;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .header {
+      background-color: #d0eaff;
+      padding: 30px 20px;
+      text-align: center;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+      color: #007acc;
+    }
+    .content {
+      padding: 20px;
+      color: #333;
+    }
+    .content p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .section-title {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #007acc;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 20px;
+      background-color: #007acc;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+    }
+    .button a {
+      color: #d0eaff;
+    }
 
-      .container {
-        max-width: 600px;
-        margin: 30px auto;
-        background: linear-gradient(
-          24deg,
-          rgb(170, 203, 247) 10%,
-          rgb(255, 255, 255) 70%
-        );
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.73);
-        overflow: hidden;
-      }
+    .button:hover {
+    color: #d0eaff;
+    background-color: #015288ff;
+    }
 
-     .header {
-        background: rgb(144, 199, 250)50%;
-        color:rgb(255, 255, 255);
-        padding: 30px 20px;
-        text-align: center;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.281);
-        overflow: hidden;
-      }
-
-      .header h1,
-      .header p {
-        position: relative;
-        z-index: 2; /* above overlay */
-      }
-
-      .header h1 {
-        color:rgb(255, 255, 255);
-        text-shadow: 3px 3px 8px rgb(0, 0, 0) ;
-        margin: 0;
-        font-size: 1.8rem;
-        font-weight: 800;
-        font-family:"TikTok Sans", sans-serif;
-      }
-
-      .content h2 span {
-        font-size: 3rem;
-        color:rgb(72, 151, 253);
-      }
-
-      .content {
-        padding: 30px 20px;
-      }
-
-      .content h2 {
-        color:rgb(144, 199, 250);
-        margin-top: 0;
-        font-family:"TikTok Sans", sans-serif;
-      }
-      .content p {
-      font-size: 1rem;
-      }
-
-      .section {
-        margin-bottom: 25px;
-        font-family: "TikTok Sans", sans-serif;
-      }
-
-      .section h3 {
-        margin-bottom: 10px;
-        font-size: 1rem;
-        color: rgb(0, 20, 202);
-        font-family: "TikTok Sans", sans-serif;
-      }
-
-      .button {
-        display: inline-block;
-        background-color:rgb(72, 151, 253);
-        color:rgb(255, 255, 255);
-        text-decoration: none;
-        padding: 12px 25px;
-        border-radius: 15px;
-        font-weight: bold;
-        margin-top: 20px;
-      }
-      
-      .container span {
-      font-size: 2rem;
-      }
-
-      .footer {
-        font-size: 12px;
-        text-align: center;
-        color:rgb(255, 255, 255);
-        padding: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="header">
-        <h4> <span> HealthLink </span> <br /> The gateway to all your Healthcare needs from the safety of your home. </h4>
-      </div>
-
-      <div class="content">
-         <h2> Welcome ${user.fullName}, you've just signed up with <br /> <span> HealthLink. </span> </h2>
-        <p>
-          Thanks for joining our community! Here's what you can expect with us:
-        </p>
-
-        <div class="section">
-          <h3>For our Service Providers:</h3>
-          <ul>
-            <li>
-              You can get all your appointments, whether it be appointment details, cancellations, conducting consultations, getting available slots and updating available slots. 
-            </li>
-            <li>
-              Schedule Livechat sessions with clients who have selected appointments and Use your dashboard to
-              <strong>view, edit, and delete</strong> your posts and appointments easily as well as Create Wellness or nutritional posts.
-            </li>
-          </ul>
-        </div>
-
-        <div class="section">
-          <h3>For our Users:</h3>
-          <ul>
-            <li>Book consultations with service providers and <strong> Schedule home lab tests. </strong> Your notifications like booked appointments with details or cancelled appointments can all be accessed while Viewing wellness and nutritional posts as well as <strong> requesting availability of ambulance services. </strong>
-            </li>
-          </ul>
-        </div>
-
-        <p>Start exploring or managing your pages below:</p>
-        <a href="........https://NOTDEPLOYED YET............" target="_blank" class="button" 
-          >Go to Your Dashboard</a
-        >
-      </div>
-
-      <div class="footer">
-        &copy; 2025 HealthLink. All rights reserved.<br />
-        You received this email because you signed up on our platform.
-      </div>
+    .footer {
+      font-size: 12px;
+      text-align: center;
+      color: #888;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Welcome to HealthLink</h1>
     </div>
-  </body>
+    <div class="content">
+      <p>Welcome <strong>[User's Name]</strong>, you've just signed up with <strong>HealthLink</strong>.</p>
+      <p>Thanks for joining our community! Here's what you can expect with us:</p>
+
+      <div class="section-title">For our Service Providers:</div>
+      <ul>
+        <li>Manage all your appointments — including details, cancellations, and consultations.</li>
+        <li>Access and update your available time slots easily.</li>
+        <li>Schedule LiveChat sessions with clients who booked appointments.</li>
+        <li>Use your dashboard to view, edit, and delete posts and appointments.</li>
+        <li>Create wellness or nutritional posts to share with the community.</li>
+      </ul>
+
+      <div class="section-title">For our Users:</div>
+      <ul>
+        <li>Book consultations with service providers.</li>
+        <li>Schedule home lab tests with just a few clicks.</li>
+        <li>Receive notifications about appointment bookings or cancellations.</li>
+        <li>View wellness and nutritional posts shared by professionals.</li>
+        <li>Request ambulance service availability anytime.</li>
+      </ul>
+
+      <p>Start exploring or managing your pages below:</p>
+      <a href="https://PUTLINKHERE WHEN DONE " class="button"> Go to Dashboard </a>
+
+      <p>If you need assistance, our support team is here to help.</p>
+      <p>Wishing you great health,<br/>The HealthLink Team</p>
+    </div>
+    <div class="footer">
+      &copy; 2025 HealthLink. All rights reserved.
+    </div>
+  </div>
+</body>
 </html>
+
 `,
     };
     // 3. Send email and get info about it (Like a Reciept)
