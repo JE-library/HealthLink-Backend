@@ -19,6 +19,10 @@ const {
   getAppointmentByIdProvider,
   confirmAppointmentProvider,
   cancelAppointmentProvider,
+  createConversationProvider,
+  getConversationsProvider,
+  getConversationByIdProvider,
+  sendMessageProvider,
 } = require("../controllers/serviceProvider/providerAppointment.controller.js");
 // Lab Controllers
 const {
@@ -85,6 +89,11 @@ router.put("/password", protected, isProvider, changePasswordProvider);
 // Get single Appointment Route
 // Confirm an Appointment Route
 // Cancel Appointment Route
+//
+// Create a new Conversation
+// Get All Conversations
+// Get single Conversation
+// Send message
 router.get("/appointments", protected, isProvider, getAppointmentsProvider);
 router.get(
   "/appointments/:id",
@@ -104,6 +113,20 @@ router.delete(
   isProvider,
   cancelAppointmentProvider
 );
+router.post(
+  "/appointments/:id/chat",
+  protected,
+  isProvider,
+  createConversationProvider
+);
+router.get("/chats", protected, isProvider, getConversationsProvider);
+router.get("/chats/:id", protected, isProvider, getConversationByIdProvider);
+// router.post(
+//   "chats/:id/send-message",
+//   protected,
+//   isProvider,
+//   sendMessageProvider
+// );
 
 // PROVIDER LAB-REQUEST ROUTES
 // Get all lab requests Route

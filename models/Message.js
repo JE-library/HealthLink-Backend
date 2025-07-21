@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const MessageSchema = new Schema(
   {
     conversationId: { type: Schema.Types.ObjectId, required: true }, // Could link to a Conversation model if needed
-    sender: {
+    senderId: {
       type: Schema.Types.ObjectId,
       refPath: "senderModel",
       required: true,
@@ -15,13 +15,12 @@ const MessageSchema = new Schema(
       enum: ["User", "ServiceProvider", "Admin"],
       required: true,
     },
-    content: { type: String, required: true },
+    message: { type: String, required: true },
     messageType: {
       type: String,
       enum: ["text", "image", "file"],
       default: "text",
     },
-    readBy: [{ type: Schema.Types.ObjectId, refPath: "senderModel" }], // users who read this message
   },
   { timestamps: true }
 );

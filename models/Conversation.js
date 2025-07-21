@@ -4,12 +4,13 @@ const Schema = mongoose.Schema;
 // Conversation Schema
 const ConversationSchema = new Schema(
   {
-    participants: [
-      {
-        userId: { type: Schema.Types.ObjectId, required: true },
-        role: { type: String, enum: ["User", "ServiceProvider", "Admin"] },
-      },
-    ],
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    serviceProvider: {
+      type: Schema.Types.ObjectId,
+      ref: "ServiceProvider",
+      required: true,
+    },
+
     lastMessage: { type: Schema.Types.ObjectId, ref: "Message" },
   },
   { timestamps: true }

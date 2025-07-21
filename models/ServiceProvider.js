@@ -25,11 +25,9 @@ const ServiceProviderSchema = new Schema(
     specialization: {
       type: String,
       enum: [
-        "doctor",
         "nutritionist",
         "therapist",
         "dermatologist",
-        "spa agent",
         "pharmacist",
         "lab technician",
         "physiotherapist",
