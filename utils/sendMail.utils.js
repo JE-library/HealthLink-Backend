@@ -24,11 +24,11 @@ const sendEmail = async (user) => {
 <head>
   <meta charset="UTF-8">
   <title>Welcome to HealthLink</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       background-color: #f0f8ff;
     }
     .container {
@@ -40,20 +40,22 @@ const sendEmail = async (user) => {
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
     .header {
-      background-color: #d0eaff;
+      background-color: #53cde2;
       padding: 30px 20px;
       text-align: center;
     }
     .header h1 {
       margin: 0;
+      font-family: 'Plus Jakarata Sans', sans-serif;
       font-size: 28px;
-      color: #007acc;
+      color: #d1f4fa;
     }
     .content {
       padding: 20px;
       color: #333;
     }
     .content p {
+      font-family: 'DM Sans', sans-serif;
       font-size: 16px;
       line-height: 1.6;
     }
@@ -61,7 +63,7 @@ const sendEmail = async (user) => {
       margin-top: 20px;
       font-size: 18px;
       font-weight: 600;
-      color: #007acc;
+      color: #005792;
     }
     ul {
       padding-left: 20px;
@@ -70,19 +72,20 @@ const sendEmail = async (user) => {
       display: inline-block;
       margin-top: 25px;
       padding: 12px 20px;
-      background-color: #007acc;
-      color: #ffffff;
+      background-color: #53cde2;
+      color: #d1f4fa;
       text-decoration: none;
       border-radius: 5px;
       font-weight: 600;
     }
     .button a {
-      color: #d0eaff;
+      color: #d1f4fa;
+      font-family: 'Plus Jakarata Sans', sans-serif;
     }
 
     .button:hover {
-    color: #d0eaff;
-    background-color: #015288ff;
+    color: #d1f4fa;
+    background-color: #013253ff;
     }
 
     .footer {
