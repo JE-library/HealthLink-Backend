@@ -31,13 +31,15 @@ const userAppointmentController = {
         throw new Error(error.details[0].message);
       }
 
-      const { date, timeSlot, mode, notes, serviceProviderId } = value;
+      const { date, timeSlot, mode, notes } = value;
 
-      // Ensure the service provider exists
       //check if the serviceProviderId is a valid MongoDB ObjectId
+      // Ensure the service provider exists
+      const serviceProviderId = req.params.id;
       if (!mongoose.Types.ObjectId.isValid(serviceProviderId)) {
         return res.status(400).json({ message: "Invalid Service Provider ID" });
       }
+
       const providerExists = await getProviderById(serviceProviderId);
 
       // Check if Time slot is already booked
@@ -175,105 +177,114 @@ const userAppointmentController = {
     }
   },
   // CREATE A CONVERSATION
-    createConversationUser: async (req, res, next) => {
-      try {
-        const appointmentId = req.params.id;
-  
-        //check if the appointmentId is a valid MongoDB ObjectId
-        if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
-          return res.status(400).json({ message: "Invalid Apoointment ID" });
-        }
-        //Get Appointment
-        const appointment = await Appointment.findById(appointmentId);
-        if (!appointment) {
-          res.status(404);
-          throw new Error("Appointment not found");
-        }
-        //Extract user and provider Id
-        const userId = appointment.user;
-        const providerId = appointment.serviceProvider;
-  
-        //check if converstion already exists
-        const conversationExists = await Conversation.findOne({
-          user: userId,
-          serviceProvider: providerId,
-        });
-  
-        if (conversationExists) {
-          // Respond with Existing Converation
-          const messages = await Message.find({
+  createConversationUser: async (req, res, next) => {
+    try {
+      const appointmentId = req.params.id;
+
+      //check if the appointmentId is a valid MongoDB ObjectId
+      if (!mongoose.Types.ObjectId.isValid(appointmentId)) {
+        return res.status(400).json({ message: "Invalid Apoointment ID" });
+      }
+      //Get Appointment
+      const appointment = await Appointment.findById(appointmentId);
+      if (!appointment) {
+        res.status(404);
+        throw new Error("Appointment not found");
+      }
+      //Extract user and provider Id
+      const userId = appointment.user;
+      const providerId = appointment.serviceProvider;
+
+      //check if converstion already exists
+      const conversationExists = await Conversation.findOne({
+        user: userId,
+        serviceProvider: providerId,
+      });
+
+      if (conversationExists) {
+        // Respond with Existing Converation
+        const messages = await Message.find(
+          {
             conversationId: conversationExists._id,
-          });
-          return response(res, "conversation", {
-            conversation: conversationExists,
-            messages,
-          });
-        }
-        //Create New Conversation
-        const newConversation = await Conversation.create({
-          user: userId,
-          serviceProvider: providerId,
-        });
-        const messages = await Message.find({
-          conversationId: newConversation._id,
-        });
-        //respond with New Converstion
-        response(res, "conversation", {
-          conversation: newConversation,
+          },
+          { message: 1, createdAt: 1, senderModel: 1 }
+        );
+        return response(res, "conversation", {
+          conversation: conversationExists,
           messages,
         });
-      } catch (error) {
-        next(error);
       }
-    },
-    // GET ALL CONVERSATIONS
-    getConversationsUser: async (req, res, next) => {
-      try {
-        const conversations = await Conversation.find({
-          user: req.user._id,
-        });
-  
-        //if there's no conversations respond with none found
-        if (!conversations || conversations.length === 0) {
-          return response(
-            res,
-            "converstion",
-            [],
-            200,
-            true,
-            "No converstion found"
-          );
-        }
-        // Respond with the all conversations
-        response(res, "conversations", conversations);
-      } catch (error) {
-        next(error);
+      //Create New Conversation
+      const newConversation = await Conversation.create({
+        user: userId,
+        serviceProvider: providerId,
+      });
+      const messages = await Message.find(
+        {
+          conversationId: newConversation._id,
+        },
+        { message: 1, createdAt: 1, senderModel: 1 }
+      );
+      //respond with New Converstion
+      response(res, "conversation", {
+        conversation: newConversation,
+        messages,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  // GET ALL CONVERSATIONS
+  getConversationsUser: async (req, res, next) => {
+    try {
+      const conversations = await Conversation.find({
+        user: req.user._id,
+      });
+
+      //if there's no conversations respond with none found
+      if (!conversations || conversations.length === 0) {
+        return response(
+          res,
+          "converstion",
+          [],
+          200,
+          true,
+          "No converstion found"
+        );
       }
-    },
-    // GET A SINGLE CONVERSATION
-    getConversationByIdUser: async (req, res, next) => {
-      try {
-        const conversationId = req.params.id;
-  
-        //check if the conversationId is a valid MongoDB ObjectId
-        if (!mongoose.Types.ObjectId.isValid(conversationId)) {
-          return res.status(400).json({ message: "Invalid Conversation ID" });
-        }
-        //Get Conversation
-        //Get Messages
-        const conversation = await Conversation.findById(conversationId);
-        const messages = await Message.find({ conversationId });
-        //if there's no conversations respond with Error
-        if (!conversation) {
-          res.status(404);
-          throw new Error("conversation not found");
-        }
-        // Respond with the all conversations
-        response(res, "conversation", { conversation, messages });
-      } catch (error) {
-        next(error);
+      // Respond with the all conversations
+      response(res, "conversations", conversations);
+    } catch (error) {
+      next(error);
+    }
+  },
+  // GET A SINGLE CONVERSATION
+  getConversationByIdUser: async (req, res, next) => {
+    try {
+      const conversationId = req.params.id;
+
+      //check if the conversationId is a valid MongoDB ObjectId
+      if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+        return res.status(400).json({ message: "Invalid Conversation ID" });
       }
-    },
+      //Get Conversation
+      //Get Messages
+      const conversation = await Conversation.findById(conversationId);
+      const messages = await Message.find(
+        { conversationId },
+        { message: 1, createdAt: 1, senderModel: 1 }
+      );
+      //if there's no conversations respond with Error
+      if (!conversation) {
+        res.status(404);
+        throw new Error("conversation not found");
+      }
+      // Respond with the all conversations
+      response(res, "conversation", { conversation, messages });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = userAppointmentController;

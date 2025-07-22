@@ -10,6 +10,7 @@ const generateToken = require("../../utils/jwt.util.js");
 
 const cloudinary = require("../../config/cloudinary.config");
 const fs = require("fs/promises");
+const sendEmail = require("../../utils/sendMail.utils.js");
 
 //USER AUTH CONTROLLER
 
@@ -85,6 +86,8 @@ const userAuthController = {
         },
         201
       );
+      //SENDING WELCOME EMAIL TO USER
+      sendEmail({ fullName, email });
     } catch (error) {
       next(error);
     }

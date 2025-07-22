@@ -22,7 +22,7 @@ const {
   createConversationUser,
   getConversationsUser,
   getConversationByIdUser,
-  sendMessageUser
+  sendMessageUser,
 } = require("../controllers/user/userAppointment.controller.js");
 // Lab Controllers
 const {
@@ -75,13 +75,13 @@ router.put("/password", protected, isUser, changePassword);
 // Get All Conversations
 // Get single Conversation
 // Send message
-router.post("/book-appointment", protected, isUser, bookAppointment);
+router.post("/book-appointment/:id", protected, isUser, bookAppointment);
 router.get("/appointments", protected, isUser, getAppointmentsUser);
 router.get("/appointments/:id", protected, isUser, getAppointmentByIdUser);
 router.delete(
   "/appointments/:id/cancel",
-  isUser,
   protected,
+  isUser,
   cancelAppointmentUser
 );
 //
@@ -105,7 +105,7 @@ router.get("/chats/:id", protected, isUser, getConversationByIdUser);
 // Get all lab requests Route
 // Get single lab request Route
 // Cancel lab request Route
-router.post("/book-lab-service", protected, isUser, bookLabService);
+router.post("/book-lab-service/:id", protected, isUser, bookLabService);
 router.get("/lab-service", protected, isUser, getLabRequestsUser);
 router.get("/lab-service/:id", protected, isUser, getLabRequestByIdUser);
 router.delete(

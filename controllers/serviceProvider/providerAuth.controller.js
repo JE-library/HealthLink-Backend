@@ -11,6 +11,7 @@ const {
   createServiceProvider,
 } = require("../../services/serviceProvider.service");
 const generateToken = require("../../utils/jwt.util.js");
+const sendEmail = require("../../utils/sendMail.utils.js");
 
 const providerAuthController = {
   registerProvider: async (req, res, next) => {
@@ -137,7 +138,7 @@ const providerAuthController = {
         certifications,
       });
       // send service provider to client
-      return response(
+      response(
         res,
         "provider",
         provider,
@@ -145,6 +146,8 @@ const providerAuthController = {
         true,
         "Service provider registered successfully"
       );
+      //SENDING WELCOME EMAIL TO SERVICE PROVIDER
+      sendEmail({ fullName, email });
     } catch (err) {
       console.error(err);
       next(err);

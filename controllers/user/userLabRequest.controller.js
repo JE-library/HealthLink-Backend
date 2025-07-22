@@ -20,12 +20,15 @@ const userLabRequestController = {
         throw new Error(error.details[0].message);
       }
 
-      const { serviceProviderId, tests, date, timeSlot, notes } = value;
+      const { tests, date, timeSlot, notes } = value;
 
-      //check if the labRequestId is a valid MongoDB ObjectId
+      //check if the serviceProviderId is a valid MongoDB ObjectId
+      // Ensure the service provider exists
+      const serviceProviderId = req.params.id;
       if (!mongoose.Types.ObjectId.isValid(serviceProviderId)) {
         return res.status(400).json({ message: "Invalid Service Provider ID" });
       }
+      const providerExists = await getProviderById(serviceProviderId);
 
       // Check if Time slot is already booked
       const slotTaken = await isSlotTaken({
@@ -40,10 +43,6 @@ const userLabRequestController = {
           "This time slot is already booked for the selected provider."
         );
       }
-
-      // Ensure the service provider exists
-      const providerExists = await getProviderById(serviceProviderId);
-
       const labRequest = await createLabRequest({
         user: req.user._id,
         serviceProvider: providerExists._id,

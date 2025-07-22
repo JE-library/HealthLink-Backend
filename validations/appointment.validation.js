@@ -1,7 +1,6 @@
 const Joi = require("joi");
 
 const appointmentSchema = Joi.object({
-  serviceProviderId: Joi.string().required(),
   date: Joi.date().required(),
   timeSlot: Joi.string().required(), // e.g. "10:00-10:30"
   mode: Joi.string()

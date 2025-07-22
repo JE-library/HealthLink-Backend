@@ -1,6 +1,8 @@
 const express = require("express");
 const connectDB = require("./config/db.config.js");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./documentation/swagger-output.json");
 const dotenv = require("dotenv");
 
 const errorHandler = require("./middlewares/errorHandler.middleware.js");
@@ -16,6 +18,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Routes
 app.use("/api/users", userRoutes);
@@ -41,3 +44,5 @@ const startServer = async () => {
 };
 
 startServer();
+
+

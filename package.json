@@ -4,7 +4,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "doc": "node ./documentation/swagger.config.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,8 @@
     "mongoose": "^8.16.2",
     "multer": "^2.0.1",
     "nodemailer": "^7.0.5",
-    "pusher": "^5.2.0"
+    "pusher": "^5.2.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
   }
 }

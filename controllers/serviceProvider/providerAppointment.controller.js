@@ -81,7 +81,7 @@ const providerAppointmentController = {
 
       if (!confirmedAppointment) {
         res.status(404);
-        throw new Error("Appointment not found or already cancelled");
+        throw new Error("Appointment not found or already confirmed");
       }
 
       // 🔔 Notify user of cancellation

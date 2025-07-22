@@ -16,7 +16,6 @@ const registerServiceProviderSchema = Joi.object({
   year: Joi.array().optional(),
   specialization: Joi.string()
     .valid(
-      "doctor",
       "nutritionist",
       "therapist",
       "dermatologist",
