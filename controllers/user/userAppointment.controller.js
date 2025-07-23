@@ -45,7 +45,7 @@ const userAppointmentController = {
       // Check if Time slot is already booked
       const slotTaken = await isBooked({
         serviceProvider: serviceProviderId,
-        date,
+        date: new Date(date),
         timeSlot,
         status: { $ne: "cancelled" },
       });

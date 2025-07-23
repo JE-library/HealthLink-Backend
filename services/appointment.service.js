@@ -13,7 +13,9 @@ const appointmentServices = {
 
   //Get all Appointments Admin
   getAdminAppointments: async (userId) => {
-    return await Appointment.find();
+    return await Appointment.find()
+      .populate("serviceProvider", "fullName")
+      .populate("user", "fullName");
   },
   //Get all Appointments User
   getUserAppointments: async (userId) => {
@@ -33,7 +35,7 @@ const appointmentServices = {
     const appointment = await Appointment.findOne({
       _id: appointmentId,
     })
-      .populate("serviceProvider", "fullName specialization profilePhoto")
+      .populate("serviceProvider", "fullName specialization profilePhoto email phoneNumber")
       .populate("user", "fullName email phoneNumber profilePhoto");
 
     return appointment;

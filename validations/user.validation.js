@@ -5,8 +5,8 @@ const registerUserSchema = Joi.object({
   email: Joi.string().email().required(),
   phoneNumber: Joi.string().required(),
   password: Joi.string().min(6).required(),
-  gender: Joi.string().valid("male", "female", "other").required(),
-  dateOfBirth: Joi.date().less("now").required(),
+  gender: Joi.string().valid("male", "female", "other").optional(),
+  dateOfBirth: Joi.date().less("now").optional(),
   address: Joi.string().min(3).optional(),
   profilePhoto: Joi.string().uri().optional(),
 });
@@ -21,7 +21,6 @@ const updateUserSchema = Joi.object({
   address: Joi.string().min(3),
   profilePhoto: Joi.string().uri().optional(),
 });
-
 
 const changePasswordSchema = Joi.object({
   currentPassword: Joi.string().required(),

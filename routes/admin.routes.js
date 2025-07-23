@@ -40,7 +40,7 @@ const {
 } = require("../controllers/admin/adminPosts.controller.js");
 // Overview Controllers
 const {
-  getOverviewAdmin
+  getOverviewAdmin,
 } = require("../controllers/admin/adminOverview.controller.js");
 
 // Auth Middleware
@@ -52,6 +52,7 @@ const { isAdmin } = require("../middlewares/role.middleware.js");
 // Admin login route
 // Admin Logout route
 router.post("/register", registerAdmin);
+router.post("/login", loginAdmin);
 // router.post("/logout", logoutProvider);
 
 // PROTECTED ROUTES ////////////

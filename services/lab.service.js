@@ -15,9 +15,11 @@ const labService = {
     return await LabRequest.create(data);
   },
 
-  //Get all Appointments Admin
+  //Get all Lab Requests Admin
   getAdminLabRequests: async (userId) => {
-    return await LabRequest.find();
+    return await LabRequest.find()
+      .populate("serviceProvider", "fullName")
+      .populate("user", "fullName");
   },
 
   //Get all Lab Requests User
@@ -39,7 +41,10 @@ const labService = {
     const labRequest = await LabRequest.findOne({
       _id: labRequestId,
     })
-      .populate("serviceProvider", "fullName specialization profilePhoto")
+      .populate(
+        "serviceProvider",
+        "fullName specialization profilePhoto email phoneNumber"
+      )
       .populate("user", "fullName email phoneNumber profilePhoto");
 
     return labRequest;
