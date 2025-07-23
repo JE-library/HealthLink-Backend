@@ -102,7 +102,7 @@ const sendEmail = async (user) => {
       <h1>Welcome to HealthLink</h1>
     </div>
     <div class="content">
-      <p>Welcome <strong>[User's Name]</strong>, you've just signed up with <strong>HealthLink</strong>.</p>
+      <p>Welcome <strong>${user.fullName}</strong>, you've just signed up with <strong>HealthLink</strong>.</p>
       <p>Thanks for joining our community! Here's what you can expect with us:</p>
 
       <div class="section-title">For our Service Providers:</div>

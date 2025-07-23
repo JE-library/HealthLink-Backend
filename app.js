@@ -31,7 +31,7 @@ app.use("/api/users", userRoutes);
 
 // // TESTING IF EMAIL WORKS
 // app.get("/api/testemail", async (req, res)=> {
-//   const user = {email:'jackie.creative233@gmail.com'}
+//   const user = {email:'jackie.creative233@gmail.com', fullName: "Bob Lashy"}
 //   await sendEmail(user)
 //   res.send("Email Sent")
 // });
