@@ -52,7 +52,6 @@ const { isAdmin } = require("../middlewares/role.middleware.js");
 // Admin login route
 // Admin Logout route
 router.post("/register", registerAdmin);
-router.post("/login", loginAdmin);
 // router.post("/logout", logoutProvider);
 
 // PROTECTED ROUTES ////////////

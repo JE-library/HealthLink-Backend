@@ -4,7 +4,6 @@ const router = Router();
 // Auth Controllers
 const {
   registerUser,
-  loginUser,
   // logoutUser,
 } = require("../controllers/user/userAuth.controller.js");
 // Profile Controllers
@@ -49,10 +48,8 @@ const { isUser } = require("../middlewares/role.middleware.js");
 
 // USER AUTH ROUTES
 // Register route
-// Login route
 // Logout route
 router.post("/register", handleProfilePic, registerUser);
-router.post("/login", loginUser);
 // router.post("/logout", logoutUser);
 
 // PROTECTED ROUTES ////////////

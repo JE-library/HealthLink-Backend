@@ -46,3 +46,17 @@ const startServer = async () => {
 startServer();
 
 
+
+
+/////////////////////////////////////////////////////////////
+
+async function inserter(data) {
+  try {
+    await Post.insertMany(data);
+    console.log("✅ Data inserted successfully.");
+  } catch (err) {
+    console.error("❌ Error inserting Data:", err);
+  }
+}
+
+// inserter(posts);

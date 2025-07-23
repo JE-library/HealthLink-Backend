@@ -92,57 +92,6 @@ const userAuthController = {
       next(error);
     }
   },
-
-  //LOGIN USER CONTROLLER
-  loginUser: async (req, res, next) => {
-    try {
-      // Validate input
-      const { error, value } = loginSchema.validate(req.body);
-      if (error) {
-        res.status(400);
-        throw new Error(error.details[0].message);
-      }
-
-      const { email, password } = value;
-
-      // Fetch user
-      const matchedUser = await checkUserExists(email);
-      if (!matchedUser) {
-        res.status(401);
-        throw new Error("Invalid email or password");
-      }
-
-      // Compare password
-      const isMatch = await bcrypt.compare(password, matchedUser.password);
-      if (!isMatch) {
-        res.status(401);
-        throw new Error("Invalid email or password");
-      }
-
-      // Generate Token
-      const token = generateToken({
-        id: matchedUser._id,
-        role: matchedUser.role,
-      });
-
-      // Respond
-      response(
-        res,
-        "user",
-        {
-          _id: matchedUser._id,
-          fullName: matchedUser.fullName,
-          email: matchedUser.email,
-          phoneNumber: matchedUser.phoneNumber,
-          role: matchedUser.role,
-          token,
-        },
-        200
-      );
-    } catch (error) {
-      next(error);
-    }
-  },
 };
 
 module.exports = userAuthController;

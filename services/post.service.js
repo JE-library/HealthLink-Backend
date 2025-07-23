@@ -8,24 +8,19 @@ const postService = {
 
   //Get all wellness and nutrition posts
   getPosts: async () => {
-    return await Post.find().sort({ createdAt: -1 });
+    return await Post.find()
+      .sort({ createdAt: -1 })
+      .populate(
+        "author",
+        "fullName email phoneNumber specialization profilePhoto"
+      );
   },
-  //Get single Post admin
-  getAdminPostDetails: async (postId) => {
+  //Get single Post
+  getSinglePost: async (postId) => {
     const post = await Post.findById(postId).populate(
       "author",
       "fullName email phoneNumber specialization profilePhoto"
     );
-    if (!post) {
-      const error = new Error("Post not found");
-      error.statusCode = 404;
-      throw error;
-    }
-    return post;
-  },
-  //Get single Post
-  getSinglePost: async (postId) => {
-    const post = await Post.findById(postId);
     if (!post) {
       const error = new Error("Post not found");
       error.statusCode = 404;

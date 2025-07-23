@@ -3,7 +3,6 @@ const router = Router();
 // Auth Controllers
 const {
   registerProvider,
-  loginProvider,
 } = require("../controllers/serviceProvider/providerAuth.controller.js");
 // Profile Controllers
 const {
@@ -59,10 +58,8 @@ const { isProvider } = require("../middlewares/role.middleware.js");
 
 // PROVIDER AUTH ROUTES
 // Register route
-// Login route
 // Logout route
 router.post("/register", handleDocsAndProfilePic, registerProvider);
-router.post("/login", loginProvider);
 // router.post("/logout", logoutProvider);
 
 // PROTECTED ROUTES ////////////

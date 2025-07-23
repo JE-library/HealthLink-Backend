@@ -154,59 +154,6 @@ const providerAuthController = {
     }
   },
   //////////////////////////////////////////////////////////////////////////////////////
-
-  //LOGIN PROVIDER CONTROLLER
-  loginProvider: async (req, res, next) => {
-    try {
-      // Validate input
-      const { error, value } = loginSchema.validate(req.body);
-      if (error) {
-        res.status(400);
-        throw new Error(error.details[0].message);
-      }
-
-      const { email, password } = value;
-
-      // Check if Provider Exists
-      const matchedProvider = await ServiceProvider.findOne({ email });
-      if (!matchedProvider) {
-        res.status(401);
-        throw new Error("Invalid email or password");
-      }
-
-      // Compare password
-      const isMatch = await bcrypt.compare(password, matchedProvider.password);
-      if (!isMatch) {
-        res.status(401);
-        throw new Error("Invalid email or password");
-      }
-
-      // Generate Token
-      const token = generateToken({
-        id: matchedProvider._id,
-        role: matchedProvider.role,
-      });
-
-      // Respond
-      response(
-        res,
-        "user",
-        {
-          _id: matchedProvider._id,
-          fullName: matchedProvider.fullName,
-          email: matchedProvider.email,
-          phoneNumber: matchedProvider.phoneNumber,
-          specialization: matchedProvider.specialization,
-          role: matchedProvider.role,
-          status: matchedProvider.status,
-          token,
-        },
-        200
-      );
-    } catch (error) {
-      next(error);
-    }
-  },
 };
 
 module.exports = providerAuthController;

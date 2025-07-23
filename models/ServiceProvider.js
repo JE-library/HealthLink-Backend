@@ -41,7 +41,7 @@ const ServiceProviderSchema = new Schema(
         trim: true,
       },
     ],
-    bio: { type: String, maxlength: 1000 },
+    bio: { type: String, maxlength: 1000, default: "No Bio" },
 
     certifications: [
       {

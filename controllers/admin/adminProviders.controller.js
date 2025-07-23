@@ -18,6 +18,7 @@ const {
   getProviderById,
   getAdminProviderById,
   updateAdminProviderStatus,
+  getProviders,
 } = require("../../services/serviceProvider.service.js");
 const Notification = require("../../models/Notification.js");
 const {
@@ -30,7 +31,7 @@ const adminProvidersController = {
   //GET ALL PROVIDERS
   getProvidersAdmin: async (req, res, next) => {
     try {
-      const providers = await getAdminProviders();
+      const providers = await getProviders();
 
       //if there's no providers respond with none found
       if (!providers || providers.length === 0) {

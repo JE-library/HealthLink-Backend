@@ -33,7 +33,7 @@ const userLabRequestController = {
       // Check if Time slot is already booked
       const slotTaken = await isSlotTaken({
         serviceProvider: serviceProviderId,
-        date,
+        date: new Date(date),
         timeSlot,
       });
 

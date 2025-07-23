@@ -11,7 +11,7 @@ const LabRequestSchema = new Schema(
       required: true,
     },
     tests: [{ type: String, required: true }], // e.g. ["blood test", "MRI"]
-    date: { type: Date, required: true },
+    date: { type: String, required: true },
     timeSlot: { type: String, required: true }, // e.g. "10:00-10:30"
     status: {
       type: String,

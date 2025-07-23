@@ -1,5 +1,11 @@
 const { Router } = require("express");
 const router = Router();
+const { login } = require("../controllers/general/login.controller.js");
+const {
+  getPosts,
+  getSinglePost,
+} = require("../controllers/general/posts.controller.js");
+
 // Notification Controllers
 const {
   markNotificationAsRead,
@@ -8,6 +14,13 @@ const {
 
 // Auth Middleware
 const protected = require("../middlewares/auth.middleware.js");
+const {
+  getProviders,
+  getSingleProvider,
+} = require("../controllers/general/provider.controller.js");
+
+//LOGIN ROUTE
+router.post("/login", login);
 
 //  NOTIFICATION ROUTES
 // Get all notifications Route
@@ -15,3 +28,15 @@ const protected = require("../middlewares/auth.middleware.js");
 router.get("/notifications", protected, getAllNotifications);
 router.patch("/notifications/:id", protected, markNotificationAsRead);
 module.exports = router;
+
+// POST ROUTES
+// Get all posts Route
+// Get single post Route
+router.get("/posts", getPosts);
+router.get("/posts/:id", getSinglePost);
+
+// SERVICE PROVIDERS ROUTES
+// Get all posts Route
+// Get single post Route
+router.get("/providers", protected, getProviders);
+router.get("/providers/:id", protected, getSingleProvider);

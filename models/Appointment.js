@@ -10,7 +10,7 @@ const AppointmentSchema = new Schema(
       ref: "ServiceProvider",
       required: true,
     },
-    date: { type: Date, required: true },
+    date: { type: String, required: true },
     timeSlot: { type: String, required: true }, // e.g. "10:00-10:30"
     mode: {
       type: String,
@@ -22,7 +22,7 @@ const AppointmentSchema = new Schema(
       enum: ["pending", "confirmed", "cancelled", "completed"],
       default: "pending",
     },
-    notes: { type: String },
+    notes: { type: String, default: "No Notes Provided" },
   },
   { timestamps: true }
 );

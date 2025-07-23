@@ -17,6 +17,7 @@ const Notification = require("../../models/Notification.js");
 const {
   getPosts,
   getAdminPostDetails,
+  getSinglePost,
 } = require("../../services/post.service.js");
 const Post = require("../../models/Post.js");
 
@@ -48,7 +49,7 @@ const adminPostsController = {
       if (!mongoose.Types.ObjectId.isValid(postId)) {
         return res.status(400).json({ message: "Invalid Post ID" });
       }
-      const post = await getAdminPostDetails(postId);
+      const post = await getSinglePost(postId);
 
       response(res, "post", post, 200, true, "Post Retrieved Successfully.");
     } catch (error) {
