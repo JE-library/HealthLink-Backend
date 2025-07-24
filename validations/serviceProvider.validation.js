@@ -5,26 +5,23 @@ const registerServiceProviderSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   phoneNumber: Joi.number().required(),
-  gender: Joi.string().required(),
+  gender: Joi.string().required().lowercase(),
   address: Joi.string().required(),
-  profilePhoto: Joi.string().uri().optional(),
+  profilePhoto: Joi.any().optional(),
   experienceYears: Joi.number().required(),
   professionalTitle: Joi.string().required(),
-  certifications: Joi.array().optional(),
-  title: Joi.array().optional(),
-  issuedBy: Joi.array().optional(),
-  year: Joi.array().optional(),
-  specialization: Joi.string()
+  certifications: Joi.any().optional(),
+  specialization: Joi.string().lowercase()
     .valid(
       "nutritionist",
       "therapist",
       "dermatologist",
-      "spa_agent",
       "pharmacist",
-      "lab_technician",
+      "lab technician",
       "physiotherapist"
     )
     .required(),
+  labTestsOffered: Joi.array().optional(),
   dateOfBirth: Joi.date().required(),
   bio: Joi.string().max(1000).optional(),
   availability: Joi.array()
@@ -43,11 +40,7 @@ const registerServiceProviderSchema = Joi.object({
       })
     )
     .optional(),
-  consultationModes: Joi.object({
-    video: Joi.boolean().default(true),
-    chat: Joi.boolean().default(true),
-    audio: Joi.boolean().default(false),
-  }).optional(),
+  consultationModes: Joi.string().optional(),
 });
 
 const updateProviderSchema = Joi.object({

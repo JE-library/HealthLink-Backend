@@ -18,6 +18,7 @@ const User = require("../../models/User.js");
 
 const loginController = {
   login: async (req, res, next) => {
+    const { email, password } = req.body;
     try {
       // Validate input
       const { error, value } = loginSchema.validate(req.body);

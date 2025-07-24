@@ -103,6 +103,7 @@ const providerAuthController = {
             });
 
             await fs.unlink(file.path);
+            console.log(file.path);
           } catch (err) {
             console.error(
               `Failed to upload certification file #${i + 1}:`,
