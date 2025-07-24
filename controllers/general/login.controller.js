@@ -64,6 +64,7 @@ const loginController = {
           phoneNumber: matchedUser.phoneNumber,
           role: matchedUser.role,
           token,
+          status: matchedUser?.status
         },
         200
       );
