@@ -6,9 +6,9 @@ const UserSchema = new Schema(
     fullName: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true, minlength: 6 },
-    phoneNumber: { type: String, required: true },
-    gender: { type: String, enum: ["male", "female", "other"], required: true },
-    dateOfBirth: { type: Date, required: true },
+    phoneNumber: { type: String,  },
+    gender: { type: String, enum: ["male", "female", "other"],  },
+    dateOfBirth: { type: Date, },
     role: { type: String, default: "user" },
     address: { type: String, default: "" },
     profilePhoto: {

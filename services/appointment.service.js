@@ -21,13 +21,13 @@ const appointmentServices = {
   getUserAppointments: async (userId) => {
     return await Appointment.find({ user: userId })
       .populate("serviceProvider", "fullName specialization profilePhoto")
-      .sort({ date: -1 });
+      .sort({ createdAt: -1 });
   },
   //Get all Appointments Provider
   getProviderAppointments: async (providerId) => {
     return await Appointment.find({ serviceProvider: providerId })
       .populate("user", "fullName email phoneNumber profilePhoto")
-      .sort({ date: -1 });
+      .sort({ createdAt: -1 });
   },
 
   //Get Single Appointment details Admin

@@ -19,7 +19,10 @@ const LabRequestSchema = new Schema(
       default: "pending",
     },
     notes: { type: String },
-    labResult: { url: { type: String }, public_id: { type: String } }, // link to lab report
+    labResult: {
+      url: { type: String, default: "" },
+      public_id: { type: String },
+    }, // link to lab report
   },
   { timestamps: true }
 );

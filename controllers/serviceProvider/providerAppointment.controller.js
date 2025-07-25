@@ -89,14 +89,14 @@ const providerAppointmentController = {
         userId: confirmedAppointment.user._id,
         title: "Appointment Confirmed",
         message: `${req.user.fullName} confirmed your appointment for ${confirmedAppointment.date} at ${confirmedAppointment.timeSlot}`,
-        type: "alert",
+        type: "info",
       });
       // 🔔 Send Notification to Service Provider
       await postNotification({
         userId: req.user._id,
         title: "You Confirmed an Appointment",
         message: `You Confirmed your appointment with ${confirmedAppointment.user.fullName} scheduled for ${confirmedAppointment.date} at ${confirmedAppointment.timeSlot}`,
-        type: "alert",
+        type: "info",
       });
 
       response(res, "info", "Appointment Confirmed successfully");

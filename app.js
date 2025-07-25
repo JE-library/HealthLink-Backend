@@ -49,10 +49,13 @@ startServer();
 
 
 /////////////////////////////////////////////////////////////
+// const Posts = require("./models/Post.js")
+
+
 
 async function inserter(data) {
   try {
-    await Post.insertMany(data);
+    await Posts.insertMany(data);
     console.log("✅ Data inserted successfully.");
   } catch (err) {
     console.error("❌ Error inserting Data:", err);

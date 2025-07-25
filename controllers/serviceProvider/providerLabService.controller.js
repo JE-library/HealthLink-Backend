@@ -84,7 +84,7 @@ const providerLabRequestController = {
         userId: confirmedLabRequest.user._id,
         title: "Lab Request Confirmed",
         message: `${req.user.fullName} Confirmed your Lab Request for ${confirmedLabRequest.date} at ${confirmedLabRequest.timeSlot}`,
-        type: "alert",
+        type: "info",
       });
 
       // 🔔 Send Notification to Service Provider
@@ -92,7 +92,7 @@ const providerLabRequestController = {
         userId: req.user._id,
         title: "You Confirmed a Lab Request",
         message: `You confirmed your Lab Request with ${confirmedLabRequest.user.fullName} scheduled for ${confirmedLabRequest.date} at ${confirmedLabRequest.timeSlot}`,
-        type: "alert",
+        type: "info",
       });
 
       response(res, "info", "Lab Request Confirmed successfully");
@@ -169,7 +169,7 @@ const providerLabRequestController = {
         userId: uploadedLabResult.user._id,
         title: "Lab Result Available",
         message: `${req.user.fullName} has uploaded your lab result for ${uploadedLabResult.date} at ${uploadedLabResult.timeSlot}.`,
-        type: "alert",
+        type: "info",
       });
 
       // 🔔 Send Notification to Service Provider
@@ -177,7 +177,7 @@ const providerLabRequestController = {
         userId: req.user._id,
         title: "Lab Result Uploaded",
         message: `You have successfully uploaded the lab result for ${uploadedLabResult.user.fullName}, scheduled on ${uploadedLabResult.date} at ${uploadedLabResult.timeSlot}.`,
-        type: "alert",
+        type: "info",
       });
 
       response(
