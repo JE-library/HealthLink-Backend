@@ -11,6 +11,7 @@ const generateToken = require("../../utils/jwt.util.js");
 const cloudinary = require("../../config/cloudinary.config");
 const fs = require("fs/promises");
 const sendEmail = require("../../utils/sendMail.utils.js");
+const { postNotification } = require("../../services/notification.service.js");
 
 //USER AUTH CONTROLLER
 
@@ -86,6 +87,12 @@ const userAuthController = {
         },
         201
       );
+      await postNotification({
+        userId: user._id,
+        title: "Welcome to HealthLink",
+        message: `Hi ${user.fullName}, your account has been successfully created.`,
+        type: "info",
+      });
       //SENDING WELCOME EMAIL TO USER
       sendEmail({ fullName, email });
     } catch (error) {

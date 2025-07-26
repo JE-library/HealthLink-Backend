@@ -12,14 +12,17 @@ const registerUserSchema = Joi.object({
 });
 
 const updateUserSchema = Joi.object({
-  fullName: Joi.string().min(3).max(50),
-  email: Joi.string().email(),
-  phoneNumber: Joi.string(),
-  password: Joi.string().min(6),
-  gender: Joi.string().valid("male", "female", "other"),
-  dateOfBirth: Joi.date().less("now"),
-  address: Joi.string().min(3),
-  profilePhoto: Joi.string().uri().optional(),
+  fullName: Joi.string().min(3).max(50).allow("", null).optional(),
+  email: Joi.string().email().allow("", null).optional(),
+  phoneNumber: Joi.string().allow("", null).optional(),
+  password: Joi.string().min(6).allow("", null).optional(),
+  gender: Joi.string()
+    .valid("male", "female", "other")
+    .allow("", null)
+    .optional(),
+  dateOfBirth: Joi.date().less("now").allow("", null).optional(),
+  address: Joi.string().min(3).allow("", null).optional(),
+  profilePhoto: Joi.string().uri().allow("", null).optional(),
 });
 
 const changePasswordSchema = Joi.object({

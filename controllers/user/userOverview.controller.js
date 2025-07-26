@@ -6,7 +6,7 @@ const response = require("../../utils/response.util");
 const userOverviewController = {
   getOverviewUser: async (req, res, next) => {
     try {
-      const userId = req.user._userId;
+      const userId = req.user._id;
 
       const [
         //appointments
