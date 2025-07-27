@@ -90,12 +90,7 @@ router.post(
 );
 router.get("/chats", protected, isUser, getConversationsUser);
 router.get("/chats/:id", protected, isUser, getConversationByIdUser);
-// router.post(
-//   "chats/:id/send-message",
-//   protected,
-//   isUser,
-//   sendMessageUser
-// );
+router.post("/chats/:id/send-message", protected, isUser, sendMessageUser);
 
 // USER LAB-REQUEST ROUTES
 // Book lab requests Route

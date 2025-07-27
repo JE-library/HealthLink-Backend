@@ -166,7 +166,7 @@ const providerAppointmentController = {
       const conversationExists = await Conversation.findOne({
         user: userId,
         serviceProvider: providerId,
-      });
+      }).populate("user", "fullName profilePhoto");
 
       if (conversationExists) {
         // Respond with Existing Converation
@@ -200,7 +200,9 @@ const providerAppointmentController = {
     try {
       const conversations = await Conversation.find({
         serviceProvider: req.user._id,
-      });
+      })
+        .populate("user", "fullName profilePhoto")
+        .populate("lastMessage", "senderModel message createdAt");
 
       //if there's no conversations respond with none found
       if (!conversations || conversations.length === 0) {
@@ -230,7 +232,10 @@ const providerAppointmentController = {
       }
       //Get Conversation
       //Get Messages
-      const conversation = await Conversation.findById(conversationId);
+      const conversation = await Conversation.findById(conversationId).populate(
+        "user",
+        "fullName profilePhoto"
+      );
       const messages = await Message.find({ conversationId });
       //if there's no conversations respond with Error
       if (!conversation) {

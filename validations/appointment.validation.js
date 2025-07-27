@@ -6,10 +6,14 @@ const appointmentSchema = Joi.object({
   mode: Joi.string()
     .valid("video", "chat", "audio", "in-person")
     .default("chat"),
-  notes: Joi.string().optional(),
+  notes: Joi.string().allow("", null).optional(),
+});
+
+const messageSchema = Joi.object({
+  message: Joi.string().required(), 
 });
 
 
 module.exports = {
-  appointmentSchema,
+  appointmentSchema,messageSchema
 };

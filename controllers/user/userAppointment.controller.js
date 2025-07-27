@@ -1,5 +1,6 @@
 const {
   appointmentSchema,
+  messageSchema,
 } = require("../../validations/appointment.validation.js");
 const response = require("../../utils/response.util");
 const {
@@ -17,6 +18,7 @@ const { default: mongoose } = require("mongoose");
 const Appointment = require("../../models/Appointment.js");
 const Conversation = require("../../models/Conversation.js");
 const Message = require("../../models/Message.js");
+const pusher = require("../../config/pusher.config.js");
 
 //USER APPOINTMENT CONTROLLER
 
@@ -199,7 +201,10 @@ const userAppointmentController = {
       const conversationExists = await Conversation.findOne({
         user: userId,
         serviceProvider: providerId,
-      });
+      }).populate(
+        "serviceProvider",
+        "fullName profilePhoto specialization  _id"
+      );
 
       if (conversationExists) {
         // Respond with Existing Converation
@@ -218,7 +223,10 @@ const userAppointmentController = {
       const newConversation = await Conversation.create({
         user: userId,
         serviceProvider: providerId,
-      });
+      }).populate(
+        "serviceProvider",
+        "fullName profilePhoto specialization  _id"
+      );
       const messages = await Message.find(
         {
           conversationId: newConversation._id,
@@ -239,7 +247,10 @@ const userAppointmentController = {
     try {
       const conversations = await Conversation.find({
         user: req.user._id,
-      });
+      }).populate(
+        "serviceProvider",
+        "fullName profilePhoto specialization  _id"
+      ).populate("lastMessage", "senderModel message createdAt");
 
       //if there's no conversations respond with none found
       if (!conversations || conversations.length === 0) {
@@ -252,6 +263,8 @@ const userAppointmentController = {
           "No converstion found"
         );
       }
+      //getting last message
+
       // Respond with the all conversations
       response(res, "conversations", conversations);
     } catch (error) {
@@ -269,7 +282,10 @@ const userAppointmentController = {
       }
       //Get Conversation
       //Get Messages
-      const conversation = await Conversation.findById(conversationId);
+      const conversation = await Conversation.findById(conversationId).populate(
+        "serviceProvider",
+        "fullName profilePhoto specialization _id"
+      );
       const messages = await Message.find(
         { conversationId },
         { message: 1, createdAt: 1, senderModel: 1 }
@@ -281,6 +297,50 @@ const userAppointmentController = {
       }
       // Respond with the all conversations
       response(res, "conversation", { conversation, messages });
+    } catch (error) {
+      next(error);
+    }
+  },
+  // SEND MESSAGE USER
+  sendMessageUser: async (req, res, next) => {
+    try {
+      const conversationId = req.params.id;
+
+      //check if the conversationId is a valid MongoDB ObjectId
+      if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+        return res.status(400).json({ message: "Invalid Conversation ID" });
+      }
+      // Validate Message
+      const { error, value } = messageSchema.validate(req.body);
+      if (error) {
+        res.status(400);
+        throw new Error(error.details[0].message);
+      }
+      const { message } = value;
+
+      //Saving message to DB
+      const newMessage = {
+        conversationId,
+        senderId: req.user._id,
+        senderModel: "User",
+        message,
+      };
+      const savedMsg = await Message.create(newMessage);
+
+      //Sending Message via Pusher
+      pusher.trigger(`chat-${conversationId}`, "new-message", {
+        senderId: savedMsg.senderId,
+        senderModel: savedMsg.senderModel,
+        message: savedMsg.message,
+        createdAt: savedMsg.createdAt,
+      });
+      //updating last message
+      await Conversation.findByIdAndUpdate(conversationId, {
+        lastMessage: savedMsg._id,
+      });
+
+      //Sending message via http
+      response(res, "message", savedMsg);
     } catch (error) {
       next(error);
     }
