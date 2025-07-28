@@ -12,10 +12,10 @@ const registerUserSchema = Joi.object({
 });
 
 const updateUserSchema = Joi.object({
-  fullName: Joi.string().min(3).max(50).allow("", null).optional(),
-  email: Joi.string().email().allow("", null).optional(),
+  fullName: Joi.string().min(3).max(50).required(),
+  email: Joi.string().email().required().lowercase(),
   phoneNumber: Joi.string().allow("", null).optional(),
-  password: Joi.string().min(6).allow("", null).optional(),
+  password: Joi.string().min(6).required(),
   gender: Joi.string()
     .valid("male", "female", "other")
     .allow("", null)

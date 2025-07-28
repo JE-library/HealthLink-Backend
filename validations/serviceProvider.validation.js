@@ -11,7 +11,8 @@ const registerServiceProviderSchema = Joi.object({
   experienceYears: Joi.number().required(),
   professionalTitle: Joi.string().required(),
   certifications: Joi.any().optional(),
-  specialization: Joi.string().lowercase()
+  specialization: Joi.string()
+    .lowercase()
     .valid(
       "nutritionist",
       "therapist",
@@ -45,20 +46,24 @@ const registerServiceProviderSchema = Joi.object({
 
 const updateProviderSchema = Joi.object({
   fullName: Joi.string(),
-  email: Joi.string().email(),
+  email: Joi.string().email().lowercase(),
   phoneNumber: Joi.number(),
   gender: Joi.string(),
   address: Joi.string(),
-  profilePhoto: Joi.string().uri().optional(),
+  profilePhoto: Joi.string().uri().allow("", null).optional(),
   experienceYears: Joi.number(),
   professionalTitle: Joi.string(),
   dateOfBirth: Joi.date(),
   bio: Joi.string().max(1000),
+  isAvailable: Joi.boolean().default(true).optional(),
+  labTestsOffered: Joi.array().items(Joi.string()).allow("", null).optional(),
   consultationModes: Joi.object({
     video: Joi.boolean(),
     chat: Joi.boolean(),
     audio: Joi.boolean(),
-  }),
+  })
+    .allow("", null)
+    .optional(),
 });
 
 const updateProviderAvailabilitySchema = Joi.object({

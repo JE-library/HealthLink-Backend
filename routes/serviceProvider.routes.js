@@ -118,12 +118,12 @@ router.post(
 );
 router.get("/chats", protected, isProvider, getConversationsProvider);
 router.get("/chats/:id", protected, isProvider, getConversationByIdProvider);
-// router.post(
-//   "chats/:id/send-message",
-//   protected,
-//   isProvider,
-//   sendMessageProvider
-// );
+router.post(
+  "/chats/:id/send-message",
+  protected,
+  isProvider,
+  sendMessageProvider
+);
 
 // PROVIDER LAB-REQUEST ROUTES
 // Get all lab requests Route

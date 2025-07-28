@@ -10,6 +10,10 @@ const { default: mongoose } = require("mongoose");
 const Conversation = require("../../models/Conversation.js");
 const Appointment = require("../../models/Appointment.js");
 const Message = require("../../models/Message.js");
+const {
+  messageSchema,
+} = require("../../validations/appointment.validation.js");
+const pusher = require("../../config/pusher.config.js");
 
 //USER APPOINTMENT CONTROLLER
 
@@ -234,7 +238,7 @@ const providerAppointmentController = {
       //Get Messages
       const conversation = await Conversation.findById(conversationId).populate(
         "user",
-        "fullName profilePhoto"
+        "fullName profilePhoto email"
       );
       const messages = await Message.find({ conversationId });
       //if there's no conversations respond with Error
@@ -246,6 +250,51 @@ const providerAppointmentController = {
       response(res, "conversation", { conversation, messages });
     } catch (error) {
       next(error);
+    }
+  },
+
+  // SEND MESSAGE PROVIDER
+  sendMessageProvider: async (req, res, next) => {
+    try {
+      const conversationId = req.params.id;
+
+      //check if the conversationId is a valid MongoDB ObjectId
+      if (!mongoose.Types.ObjectId.isValid(conversationId)) {
+        return res.status(400).json({ message: "Invalid Conversation ID" });
+      }
+      // Validate Message
+      const { error, value } = messageSchema.validate(req.body);
+      if (error) {
+        res.status(400);
+        throw new Error(error.details[0].message);
+      }
+      const { message } = value;
+
+      //Saving message to DB
+      const newMessage = {
+        conversationId,
+        senderId: req.user._id,
+        senderModel: "ServiceProvider",
+        message,
+      };
+      const savedMsg = await Message.create(newMessage);
+
+      //Sending Message via Pusher
+      pusher.trigger(`chat-${conversationId}`, "new-message", {
+        senderId: savedMsg.senderId,
+        senderModel: savedMsg.senderModel,
+        message: savedMsg.message,
+        createdAt: savedMsg.createdAt,
+      });
+      //updating last message
+      await Conversation.findByIdAndUpdate(conversationId, {
+        lastMessage: savedMsg._id,
+      });
+
+      //Sending message via http
+      response(res, "message", savedMsg);
+    } catch (error) {
+      next(error); 
     }
   },
 };

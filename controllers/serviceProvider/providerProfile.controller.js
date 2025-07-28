@@ -64,7 +64,7 @@ const providerProfileController = {
 
       const updatedProvider = await updateServiceProvider(req.user._id, value);
 
-      response(res, "Service Provider", updatedProvider);
+      response(res, "provider", updatedProvider);
     } catch (error) {
       next(error);
     }

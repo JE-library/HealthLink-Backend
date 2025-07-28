@@ -26,14 +26,14 @@ const labService = {
   getUserLabRequests: async (userId) => {
     return await LabRequest.find({ user: userId })
       .populate("serviceProvider", "fullName specialization profilePhoto")
-      .sort({ date: -1 });
+      .sort({ date: 1 });
   },
 
   //Get all Lab Requests Provider
   getProviderLabRequests: async (providerId) => {
     return await LabRequest.find({ serviceProvider: providerId })
       .populate("user", "fullName email phoneNumber profilePhoto")
-      .sort({ date: -1 });
+      .sort({ date: 1 });
   },
 
   //Get Single Appointment details Admin
