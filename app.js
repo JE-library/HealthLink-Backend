@@ -46,20 +46,20 @@ const startServer = async () => {
 startServer();
 
 /////////////////////////////////////////////////////////////
-// const Posts = require("./models/Post.js")
-const ServiceProvider = require("./models/ServiceProvider.js");
+const Posts = require("./models/Post.js")
+// const ServiceProvider = require("./models/ServiceProvider.js");
 
-const provider = {}
-;
+const post = {}
+
+
 
 async function inserter(data) {
   try {
-    // await Posts.insertMany(data);
-    await ServiceProvider.insertOne(data);
+    await Posts.insertOne(data);
     console.log("✅ Data inserted successfully.");
   } catch (err) {
     console.error("❌ Error inserting Data:", err);
   }
 }
 
-// inserter(provider);
+// inserter(post); 

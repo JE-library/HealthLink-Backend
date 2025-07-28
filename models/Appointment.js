@@ -17,6 +17,10 @@ const AppointmentSchema = new Schema(
       enum: ["video", "chat", "audio", "in-person"],
       default: "chat",
     },
+    videoLink: {
+      type: String,
+      default: "https://meet.google.com/tcd-qfwy-cxy",
+    },
     status: {
       type: String,
       enum: ["pending", "confirmed", "cancelled", "completed"],
