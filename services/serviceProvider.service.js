@@ -3,7 +3,7 @@ const ServiceProvider = require("../models/ServiceProvider");
 const sPservice = {
   // Get All Providers
   getProviders: async () => {
-    return await ServiceProvider.find();
+    return await ServiceProvider.find().sort({ createdAt: -1 });
   },
   //Get adminprovider by id
   getAdminProviderById: async (id) => {
